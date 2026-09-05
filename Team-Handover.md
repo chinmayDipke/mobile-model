@@ -1,3 +1,9 @@
+> **HISTORICAL - read SETUP.md instead for building.**
+> Written before the repo became a Gradle project. Sections 3 and 4
+> (setup steps, copying files) are out of date: the app now builds from
+> `airgap-src/` directly via sourceSets, and nothing is copied anywhere.
+> The event plan, timeline and scoring sections below are still current.
+
 # Airgap — Team Handover
 
 **Team:** StackUnderFlow · Shan Solanki (leader) · Chinmay Dipke

@@ -1,122 +1,171 @@
-# Airgap app — how to build it
+# Airgap — build and run
 
-Written by Chinmay's side. Shan, you do not need this to work on the model.
+**This file is the build truth. If another doc disagrees with this one, this one wins.**
 
-The Kotlin lives in `airgap-src/`. It is staged there on purpose: Gradle files
-change with every Android Studio version, so we let Android Studio make those
-and we only supply our own code.
+Last merged: 5 Sept, Chinmay pulled Shan's 8 commits and added the Gradle wrapper.
 
 ---
 
-## 1. Make the project (2 minutes, once)
+## The repo is already a Gradle project
 
-In Android Studio:
+Do **not** create a new Android Studio project. Do **not** copy files into
+`app/src/main`. An older version of this file said to do that — it was true for
+about two hours and is now wrong.
 
-1. **New Project** → **Empty Views Activity**
-   ⚠️ **Views**, not Compose. Our screens are XML layouts.
-2. Name: `AirgapApp`
-3. Package name: `com.stackunderflow.airgap`  ← must match exactly
-4. Language: **Kotlin**
-5. Minimum SDK: **API 29**
-6. Save location: `D:\PROJECTS\IQoo Hackthon\mobile-model\AirgapApp`
-7. Finish, and wait for the first Gradle sync to end.
-
-## 2. Drop our code in
-
-Run this in **PowerShell**:
-
-```powershell
-$repo = "D:\PROJECTS\IQoo Hackthon\mobile-model"
-$app  = "$repo\AirgapApp\app\src\main"
-$src  = "$repo\airgap-src"
-
-Copy-Item "$src\java\*"             "$app\java\"  -Recurse -Force
-Copy-Item "$src\res\*"              "$app\res\"   -Recurse -Force
-Copy-Item "$src\assets"             "$app\"       -Recurse -Force
-Copy-Item "$src\AndroidManifest.xml" "$app\AndroidManifest.xml" -Force
-
-Remove-Item "$app\java\com\stackunderflow\airgap\MainActivity.kt.orig" -EA SilentlyContinue
-"copied. now Sync Gradle in Android Studio."
-```
-
-If Android Studio made its own `MainActivity.kt`, ours overwrites it. That is fine.
-
-## 3. One dependency
-
-Open `app/build.gradle.kts`, and inside `dependencies { }` make sure this is there.
-The Views template normally adds it already:
+The app module points straight at our source:
 
 ```kotlin
-implementation("androidx.appcompat:appcompat:1.7.0")
+// app/build.gradle.kts
+sourceSets["main"].apply {
+    java.srcDirs("../airgap-src/java")
+    res.srcDirs("../airgap-src/res")
+    assets.srcDirs("../airgap-src/assets")
+    manifest.srcFile("../airgap-src/AndroidManifest.xml")
+}
 ```
 
-Then **Sync Now**.
+So: **edit `airgap-src/`, then build.** Nothing gets copied anywhere.
 
-## 4. Build and install — through Office Kit, not adb
+---
 
-**This part matters for our score.** Office Kit usage is 10% of the marks and it
-is read off the phone, not from what we claim.
+## Build it
 
-1. In Android Studio: **Build → Build APK(s)**
-2. The file appears at `AirgapApp\app\build\outputs\apk\debug\app-debug.apk`
-3. **Drag that APK into Office Kit file transfer** to send it to the phone
-4. On the phone, tap the file to install it
-5. Use **Screen Mirror** whenever testing the block screen
-6. Use **Super Clipboard** to copy logcat text back to the laptop
+```powershell
+$env:JAVA_HOME = "C:\Users\chinm\jdk21\jdk-21.0.12.1+1"
+cd "D:\PROJECTS\IQoo Hackthon\mobile-model"
+.\gradlew.bat assembleDebug
+```
 
-Do not use `adb install`. It works, but it earns us nothing.
+APK lands at `app\build\outputs\apk\debug\app-debug.apk` — about **71 MB**.
 
-## 5. Turn on the three permissions
+If it is ~13 MB, MediaPipe did not get packaged and the model will never load.
 
-Open the app, and tap the three buttons in order:
+### Two version traps, both real, both cost an hour
+
+| Trap | Symptom | Why |
+|---|---|---|
+| **Gradle 9.x** | `InternalProblems` class not found | Gradle 9 deleted an internal API that AGP 8.13 calls. The wrapper is pinned to **8.13** — use `gradlew`, not a system `gradle`. |
+| **JDK 25** | error is just the text `25.0.3` | Gradle 8.13 does not know JDK 25. Android Studio Quail ships JBR 25, so its default JDK will fail. Point `JAVA_HOME` at **JDK 21**. |
+
+Versions that work together: **JDK 21 · Gradle 8.13 · AGP 8.13.0 · Kotlin 2.1.0 · compileSdk 36 · minSdk 31**.
+
+---
+
+## Install it — Office Kit, not adb
+
+**10% of the score is Office Kit usage, and it is read off the phone, not from
+what we say in the pitch.** There is also a "Most iQOO Usage" prize on top.
+
+1. Drag `app-debug.apk` into **Office Kit file transfer**
+2. Tap the file on the phone to install
+3. Use **Screen Mirror** when testing the block screen
+4. Use **Super Clipboard** to get logcat text back to the laptop
+
+`adb install` works and earns us nothing. Use it only when Office Kit is broken.
+
+### The model file
+
+`GemmaDetector` looks for exactly this path on the phone:
+
+```
+/data/local/tmp/llm/gemma3-1b-int4.task
+```
+
+If it is missing the app does not crash — it drops to rules only. That is on
+purpose.
+
+---
+
+## Turn on three permissions
+
+Open the app, tap the three buttons in order. The status box shows `OK` or
+`MISSING` for each.
 
 1. **Grant SMS access** — normal popup
-2. **Allow draw over other apps** — sends you to Settings, turn Airgap on
-3. **Allow notification access** — sends you to Settings, turn Airgap on
+2. **Allow draw over other apps** — sends you to Settings
+3. **Allow notification access** — sends you to Settings
 
-The status box at the top shows `OK` or `MISSING` for each one.
+---
 
-## 6. Check it works
+## Check it works
 
-- **Run all 55 test messages** → should print
-  `Scams caught 40/40   Clean passed 15/15`
-- **Fire a scam message** → the black and gold block screen appears and reads the
-  warning out loud
+The status box at the top of the app tells you which engine is live:
+
+| Shown | Meaning |
+|---|---|
+| `Rules + Gemma 3 1B (on-device)` | Model loaded. This is what we demo. |
+| `Rules only` | Model file missing or failed to load. Still works, still blocks. |
+
+It also prints `Engine ready in <n> ms` — a real number to give a judge who asks
+whether the model is genuinely on the phone.
+
+Then:
+
+- **Run all 55 test messages** → `Scams caught 40/40   Clean passed 15/15`
+- **Fire a scam message** → full-screen block, read aloud
 - **Fire a genuine bank message** → nothing happens, and the status says so.
-  **This is the important one.** It proves we built a detector, not a word filter.
+  **This is the important one.** It proves a detector, not a word filter.
+
+### Running the suite headless, from the laptop
+
+Useful while the phone is busy mirroring or rehearsing:
+
+```
+adb shell am broadcast -a com.stackunderflow.airgap.RUN_TESTS -n com.stackunderflow.airgap/.DevTestReceiver
+adb logcat -s AIRGAP_TEST
+```
 
 ---
 
 ## What is in the code
 
-| File | What it does |
-|---|---|
-| `Verdict.kt` | The shared contract. Shan plugs the model in behind `Detector`. |
-| `Normaliser.kt` | Pulls out amount, links, and phone numbers. Keeps 1800 numbers separate from personal mobiles. |
-| `StubDetector.kt` | Rules that work today. **Verified 40/40 scams, 15/15 clean.** |
-| `Airgap.kt` | Ties it together. **Swap one line here for Shan's model.** |
-| `SmsReceiver.kt` | Catches SMS as it arrives. |
-| `AirgapNotificationListener.kt` | Catches UPI collect requests from GPay, PhonePe, Paytm, BHIM. |
-| `BlockActivity.kt` | Full screen block. Reads the reason aloud with text to speech. |
-| `TestSetRunner.kt` | Runs all 55 messages and gives real numbers for the judges. |
-| `MainActivity.kt` | Permissions, demo buttons, test runner. |
+| File | What it does | Owner |
+|---|---|---|
+| `Verdict.kt` | The shared contract: `Detector.check() -> Verdict` | Chinmay |
+| `Normaliser.kt` | Pulls out amount, links, phone numbers. Keeps 1800 numbers separate from personal mobiles. | Chinmay |
+| `StubDetector.kt` | Five structural rules. **40/40 scams, 15/15 clean.** Our fallback — do not delete. | Chinmay |
+| `GemmaDetector.kt` | Gemma 3 1B through MediaPipe. One-word output, reasons come from a written table. | **Shan — do not edit** |
+| `HybridDetector.kt` | Rules first, then a "does this ask you to act?" gate, then the model. **55/55, ~1 ms per message.** | Shan |
+| `Airgap.kt` | Single entry point. Serialises detection on one worker thread. | Shan |
+| `DetectionService.kt` | Foreground service so Android cannot kill the process mid-detection. | Shan |
+| `SmsReceiver.kt` | Catches SMS, hands straight to the service. | both |
+| `AirgapNotificationListener.kt` | Catches UPI collect requests from GPay, PhonePe, Paytm, BHIM. | Chinmay |
+| `BlockActivity.kt` | Full-screen block. Reads the reason aloud. | Chinmay |
+| `TestSetRunner.kt` | Runs all 55 messages, gives judges real numbers. | Chinmay |
+| `DevTestReceiver.kt` | Headless suite trigger. Dev only. | Shan |
+| `MainActivity.kt` | Permissions, demo buttons, engine name and load time. | both |
 
-## For Shan, when the model is ready
+---
 
-Write a class that implements `Detector`, then change one line in `Airgap.kt`:
+## The one rule when adding a feature
+
+### ❌ never `Airgap.handleMessage(...)`
+### ✅ always `Airgap.handleMessageAsync(...)`
 
 ```kotlin
-var detector: Detector = GemmaDetector(context)   // was StubDetector()
+Airgap.handleMessageAsync(context, sender, body, onResult = { verdict ->
+    // runs on the MAIN thread
+})
 ```
 
-Nothing else in the app changes. The block screen, the listeners and the test
-runner all keep working. Run the 55 tests against your model and compare the
-numbers with the stub.
+`handleMessage` blocks the calling thread. With the rules stub that was instant;
+with Gemma it is ~400 ms, and ~1.5 s on the first call. On the UI thread or a
+camera callback that is a visible freeze. From a `BroadcastReceiver` it is an ANR.
 
-## Notes
+If you detect from anywhere that is **not** a foreground activity, route it
+through `DetectionService.check(...)` instead, or the process gets reclaimed
+mid-detection and the block screen silently never appears.
 
-- The block screen already does the **voice** half of the creative-phone-use 15%.
-- The **camera QR** half is not built yet. That is the next feature, and it is the
-  single highest value thing left.
-- The stub is a fallback, not the product. If the model is late, we still have a
-  working demo. That is the whole point of the split.
+---
+
+## Other docs, and which are still current
+
+| File | Status |
+|---|---|
+| `SETUP.md` | **current** — build and run |
+| `CHINMAY-READ-NOW.md` | **current** — Shan's threading rules, read before adding features |
+| `CHINMAY-TODO.md` | **current** — job list and demo order |
+| `SHAN-READ-NOW.md` | **current** — Chinmay's reply: what got merged |
+| `Device-Facts.md` | current — chips, NPU findings |
+| `testset/README.md` | current — and it flags that the 55 messages are synthetic |
+| `Team-Handover.md` | **historical.** Written before the repo was a Gradle project. Its setup steps are stale; keep it for the event plan and timeline only. |
