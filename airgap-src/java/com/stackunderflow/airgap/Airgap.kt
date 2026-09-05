@@ -52,7 +52,12 @@ object Airgap {
      * rules stub - so the app always works, including on a phone we have not
      * pushed the model to yet. Never leaves the app with no detector at all.
      */
+    @Volatile
+    private var detectorReady = false
+
+    @Synchronized
     fun initDetector(context: Context) {
+        if (detectorReady) return
         val rules = StubDetector()
         detector = try {
             val model = if (GemmaDetector.isAvailable()) {
@@ -62,6 +67,21 @@ object Airgap {
         } catch (t: Throwable) {
             HybridDetector(rules, null)   // model missing or failed to load
         }
+        detectorReady = true
+    }
+
+    /**
+     * MUST be called before any detection, from EVERY entry point.
+     *
+     * The bug this fixes: initDetector was only called from MainActivity. When a
+     * message arrives and the app process is not running, Android starts the
+     * process for the notification listener or the SMS receiver - MainActivity
+     * never runs, so Gemma was never loaded and we silently fell back to the
+     * rules stub. On stage the block screen would have said "Rules (stub)"
+     * instead of naming the model, with nothing to indicate anything was wrong.
+     */
+    private fun ensureDetector(context: Context) {
+        if (!detectorReady) initDetector(context)
     }
 
     /**
@@ -92,6 +112,7 @@ object Airgap {
         }
 
         worker.execute {
+            ensureDetector(app)   // process may have started without MainActivity
             val verdict = try {
                 detector.check(Normaliser.normalise(sender, body))
             } catch (t: Throwable) {

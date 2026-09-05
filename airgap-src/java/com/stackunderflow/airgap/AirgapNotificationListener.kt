@@ -40,6 +40,11 @@ class AirgapNotificationListener : NotificationListenerService() {
         // MUST be the async form. onNotificationPosted is on this service's main
         // thread; the blocking version would freeze it for ~400 ms with Gemma,
         // and Android kills a notification listener that stops responding.
-        Airgap.handleMessageAsync(applicationContext, sbn.packageName, body)
+        Airgap.handleMessageAsync(
+            applicationContext, sbn.packageName, body,
+            // Logged so we can tell a CLEAN verdict apart from a de-duplicated
+            // repeat during rehearsal - both look identical without this.
+            onResult = { v -> Log.i("Airgap", "verdict scam=" + v.isScam + " pattern=" + v.pattern) }
+        )
     }
 }
