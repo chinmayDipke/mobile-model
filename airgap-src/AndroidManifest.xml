@@ -49,5 +49,17 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
+
+        <!-- Dev only: run the 55-message test set from the laptop, headless.
+             adb shell am broadcast -a com.stackunderflow.airgap.RUN_TESTS \
+               -n com.stackunderflow.airgap/.DevTestReceiver
+             adb logcat -s AIRGAP_TEST -->
+        <receiver
+            android:name=".DevTestReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.stackunderflow.airgap.RUN_TESTS" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>
