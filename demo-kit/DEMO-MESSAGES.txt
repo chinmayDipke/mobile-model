@@ -2,64 +2,54 @@ AIRGAP - DEMO MESSAGES
 ======================
 Keep this open on CHINMAY'S phone. Copy, paste, send. Never type on stage.
 
-Verified on device: every one of these is caught.
 
+###########################################
+THE SEQUENCE - each one shows a DIFFERENT
+headline on the block screen
+###########################################
 
-=========================================
-THE MAIN RUN - send these two, in order
-=========================================
-
---- 1. THE SCAM (block screen + voice) ---
-
+--- 1. CASHBACK QR SCAM ---
 You have won Rs5000 cashback. Scan the QR to receive the amount in your account.
 
-
---- 2. THE CLEAN ONE (nothing must happen) ---
-
-Rs.199 debited from HDFC Bank Card xx7723 at NETFLIX on 03-09-26. Avl limit Rs.48,801.
-
-
->> Send 2 into the SAME chat as 1. That is the harder test and the one
->> that wins: it proves we do not just flag everything.
-
-
-=========================================
-IF A JUDGE ASKS FOR ANOTHER - one per type
-=========================================
-
---- Fake KYC ---
+--- 2. FAKE KYC LINK ---
 Dear Customer, your account KYC has EXPIRED. Account will be blocked within 24hrs. Update now: sbi-kyc-verify.in/update
 
---- Collect request dressed as a refund ---
+--- 3. REFUND THAT TAKES MONEY ---
 You have a COLLECT REQUEST of Rs.4999 from MERCHANT REFUND. Approve to receive your refund amount.
 
---- Fake customer care ---
+--- 4. FAKE CUSTOMER CARE ---
 Your recent transaction of Rs.24999 failed. For instant refund call our customer care 9835442621 immediately.
 
---- Wrong transfer ---
+--- 5. WRONG TRANSFER TRICK ---
 Sorry bhai, I sent Rs.9500 to your account by mistake. Please return it to my UPI id, family emergency.
 
---- Hinglish version, if they ask about Indian languages ---
-Bhaiya galti se aapko paise chale gaye 11000. Please wapas bhej do, mera number 8823551117.
-
-
-=========================================
-NOVEL SCAMS - if a judge asks "what about
-a scam you did not write a rule for?"
-=========================================
-These have NO rule. The on-device model catches them. That is the point.
-
---- Digital arrest ---
+--- 6. DIGITAL ARREST - no rule exists for this. THE MODEL catches it. ---
 Cyber Cell notice. A money laundering case is registered against your Aadhaar. Join the video call now to verify your identity, or a warrant will be issued.
 
---- Courier redelivery ---
-Your parcel could not be delivered due to an incomplete address. Update your address and pay Rs.25 redelivery: parcel-in.info/redeliver
+    Say: "We wrote no rule for this one. Digital arrest is new.
+          The rules caught zero. The on-device model caught it."
 
---- Fake job payout ---
-Your part-time task payment of Rs.8400 is ready. Open the app, tap Withdraw and enter your UPI PIN to move it to your bank.
+--- 7. CLEAN - nothing must happen ---
+Rs.199 debited from HDFC Bank Card xx7723 at NETFLIX on 03-09-26. Avl limit Rs.48,801.
 
---- FASTag ---
-Your FASTag balance is low and will be blacklisted at toll plazas. Recharge now using this link: fastag-recharge.site/pay
+    Hold still. Two seconds of silence. Then:
+    "Nothing happened. That is correct, and it is half the product."
+
+
+HOW TO USE IT
+-------------
+Short on time (Eval Round 1, at the table):   1 then 7.  40 seconds.
+Judge is interested:                          1, 6, 7.
+They want the full range:                     1 through 7.
+
+WATCH OUT
+---------
+* Same message twice inside 60 s is suppressed on purpose - one WhatsApp
+  message fires up to five notifications. To repeat, change a word
+  (Rs5000 -> Rs7000) or send a different one.
+* Number 6 goes through the model, so it takes about a second where the
+  others are instant. Say so: "that one is slower because the model is
+  reading it - the rules are instant, the model understands."
 
 
 =========================================
