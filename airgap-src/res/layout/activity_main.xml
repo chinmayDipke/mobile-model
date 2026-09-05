@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAFAF7"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AIRGAP"
+            android:textColor="#000000"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Catches UPI scams on this phone. No server."
+            android:textColor="#5A5A5A"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/statusText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="#FFFFFF"
+            android:fontFamily="monospace"
+            android:lineSpacingMultiplier="1.35"
+            android:padding="16dp"
+            android:textColor="#1A1A1A"
+            android:textSize="13sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="PERMISSIONS"
+            android:textColor="#C8920A"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/smsPermButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Grant SMS access" />
+
+        <Button
+            android:id="@+id/overlayPermButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Allow draw over other apps" />
+
+        <Button
+            android:id="@+id/notifPermButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Allow notification access" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="DEMO"
+            android:textColor="#C8920A"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/demoScamButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#F0B31C"
+            android:text="Fire a scam message"
+            android:textColor="#000000" />
+
+        <Button
+            android:id="@+id/demoCleanButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fire a genuine bank message" />
+
+        <Button
+            android:id="@+id/runTestsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Run all 55 test messages" />
+    </LinearLayout>
+</ScrollView>
