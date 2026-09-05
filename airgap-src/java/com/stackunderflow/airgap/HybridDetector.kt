@@ -37,6 +37,31 @@ class HybridDetector(
     private val model: Detector?,
 ) : Detector {
 
+    companion object {
+        /**
+         * The model gets this long, then we stop waiting.
+         *
+         * MediaPipe's generateResponse hangs on us intermittently - measured:
+         * five messages at ~2 s each, then the engine sat at 0% CPU and never
+         * returned. On stage that means a judge's SMS arrives, the model wedges,
+         * and no block screen ever appears with nothing to show for it.
+         *
+         * A verdict that arrives late is worthless anyway - the user has already
+         * read the SMS. So: answer in time or don't answer.
+         */
+        const val MODEL_TIMEOUT_MS = 6000L
+    }
+
+    /** Runs [block] on a throwaway thread, returns null if it overruns [ms]. */
+    private fun <T> withTimeout(ms: Long, block: () -> T): T? {
+        var result: T? = null
+        val t = Thread { result = try { block() } catch (_: Throwable) { null } }
+        t.isDaemon = true          // a wedged model thread must not keep the app alive
+        t.start()
+        t.join(ms)
+        return if (t.isAlive) null else result
+    }
+
     override val engineName: String =
         if (model != null) "Rules + Gemma 3 1B (on-device)" else "Rules only"
 
@@ -70,7 +95,7 @@ class HybridDetector(
 
         // 3. Unfamiliar, and it does ask for something. This is the model's job.
         val m = model ?: return Verdict.clean()
-        val byModel = m.check(message)
+        val byModel = withTimeout(MODEL_TIMEOUT_MS) { m.check(message) } ?: return Verdict.clean()
         if (!byModel.isScam) return Verdict.clean()
 
         // Flagged by the model alone - say so honestly, and with lower

@@ -72,7 +72,11 @@ Have the answer ready as a measurement, not an opinion:
 | Suite | Rules only | Rules + Gemma |
 |---|---|---|
 | 55 known messages | 40/40 · 15/15 | 40/40 · 15/15 |
-| **10 scams the rules never saw** | **0 / 10** | **see below** |
+| **10 scams the rules never saw** | **0 / 10** | **6 / 10** |
+
+**Measured on the handset, 5 Sept.** The rules score zero on these - they were
+never written for them. The model catches six. That difference is the entire
+argument for putting an LLM on the phone.
 
 The second row is the whole argument. Those 10 are real scam shapes we
 deliberately did not write rules for — electricity disconnection, courier

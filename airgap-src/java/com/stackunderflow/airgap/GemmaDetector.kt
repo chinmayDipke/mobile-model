@@ -2,7 +2,6 @@ package com.stackunderflow.airgap
 
 import android.content.Context
 import com.google.mediapipe.tasks.genai.llminference.LlmInference
-import com.google.mediapipe.tasks.genai.llminference.LlmInferenceSession
 import java.io.File
 
 /**
@@ -44,6 +43,9 @@ class GemmaDetector(private val context: Context) : Detector {
             LlmInference.LlmInferenceOptions.builder()
                 .setModelPath(MODEL_PATH)
                 .setMaxTokens(512)
+                // Caps sampling at the single most likely token, i.e. greedy.
+                // Set on the engine rather than per-session: see ask() below.
+                .setMaxTopK(1)
                 .build()
         )
     }
@@ -52,31 +54,17 @@ class GemmaDetector(private val context: Context) : Detector {
     fun preload() { llm }
 
     /**
-     * GREEDY decoding. This matters more than anything else in this file.
+     * We want GREEDY decoding: the default samples at topK=40, temperature=0.8,
+     * which is right for chat and wrong for a classifier - the same SMS could
+     * get a different answer on a re-run, and on stage that is unacceptable.
      *
-     * The default session samples with topK=40, temperature=0.8 - fine for
-     * chat, wrong for a classifier. Measured with the defaults: 8 of our 15
-     * genuine bank SMS were flagged as scams, and the same message could get
-     * a different answer on a re-run. topK=1 / temperature=0 makes it pick the
-     * single most likely token, so it is deterministic - which also means the
-     * demo behaves identically every time we run it in front of judges.
-     *
-     * A fresh session per message is deliberate too: reusing one accumulates
-     * context, so message 30 would be judged with 29 earlier messages in view.
+     * DO NOT reintroduce a per-message LlmInferenceSession here. Creating one
+     * per call and closing it deadlocked the engine: the process stayed alive
+     * holding the model at 762 MB with 0% CPU, and the run never finished.
+     * Cost us a test cycle. setMaxTopK(1) on the engine above gets greedy
+     * behaviour on the path that is known to work.
      */
-    private fun ask(prompt: String): String {
-        val session = LlmInferenceSession.createFromOptions(
-            llm,
-            LlmInferenceSession.LlmInferenceSessionOptions.builder()
-                .setTopK(1)
-                .setTemperature(0.0f)
-                .build()
-        )
-        return session.use { s ->
-            s.addQueryChunk(prompt)
-            s.generateResponse().trim()
-        }
-    }
+    private fun ask(prompt: String): String = llm.generateResponse(prompt).trim()
 
     override fun check(message: NormalisedMessage): Verdict {
         val answer = try {
