@@ -56,8 +56,9 @@ class MainActivity : AppCompatActivity() {
         findViewById<LinearLayout>(R.id.demoScamButton).setOnClickListener {
             status.text = "Checking on device..."
             Airgap.handleMessageAsync(this, "VK-REWARDS", demoScam, onResult = { v ->
-                if (!v.isScam) status.text = "Model said CLEAN. It missed this one."
-            })
+                status.text = if (v.isScam) "Blocked. Close the warning to come back."
+                              else "Model said CLEAN. It missed this one."
+            }, deduplicate = false)
         }
         findViewById<LinearLayout>(R.id.demoCleanButton).setOnClickListener {
             status.text = "Checking on device..."
@@ -66,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                     "Clean message passed silently. Nothing was shown. That is correct."
                 else
                     "FALSE ALARM - it blocked a genuine bank SMS. Needs tuning."
-            })
+            }, deduplicate = false)
         }
         findViewById<LinearLayout>(R.id.scanQrButton).setOnClickListener {
             startActivity(Intent(this, QrScanActivity::class.java))

@@ -55,6 +55,7 @@ class CheckActivity : AppCompatActivity() {
 
         Airgap.handleMessageAsync(
             this, "shared", shared,
+            deduplicate = false,   // the user asked; always answer
             onResult = { verdict ->
                 if (verdict.isScam) {
                     // handleMessageAsync already raised the block screen.

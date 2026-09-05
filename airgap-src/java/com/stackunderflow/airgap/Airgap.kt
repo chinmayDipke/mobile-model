@@ -99,6 +99,14 @@ object Airgap {
         body: String,
         onResult: ((Verdict) -> Unit)? = null,
         onFinally: (() -> Unit)? = null,
+        /**
+         * De-duplication is for messages that ARRIVE - one WhatsApp message
+         * fires up to five notifications and we must not open five block
+         * screens. It is wrong for anything the USER asked for: tapping a
+         * button or sharing a message twice must answer twice. Silence is not
+         * an answer to a direct question.
+         */
+        deduplicate: Boolean = true,
     ) {
         val app = context.applicationContext
 
@@ -117,7 +125,7 @@ object Airgap {
         // notification listener catches the Messages app's notification, which
         // Android re-posts as it updates. Measured on device, 5 hits in 13 s.
         // Without this the block screen would open five times in front of a judge.
-        if (isDuplicate(body)) {
+        if (deduplicate && isDuplicate(body)) {
             onFinally?.let { main.post(it) }
             return
         }
