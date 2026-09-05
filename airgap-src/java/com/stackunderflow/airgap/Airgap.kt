@@ -24,6 +24,23 @@ object Airgap {
     }
     private val main = Handler(Looper.getMainLooper())
 
+    /** Last few message bodies we acted on, so we do not act on them again. */
+    private val recent = ArrayDeque<Pair<String, Long>>()
+    private const val DUPLICATE_WINDOW_MS = 60_000L
+
+    @Synchronized
+    private fun isDuplicate(body: String): Boolean {
+        val now = System.currentTimeMillis()
+        while (recent.isNotEmpty() && now - recent.first().second > DUPLICATE_WINDOW_MS) {
+            recent.removeFirst()
+        }
+        val key = body.trim()
+        if (recent.any { it.first == key }) return true
+        recent.addLast(key to now)
+        if (recent.size > 20) recent.removeFirst()
+        return false
+    }
+
     /** Swap this one line when Shan's model is ready. Nothing else changes. */
     @Volatile
     var detector: Detector = StubDetector()
@@ -64,6 +81,16 @@ object Airgap {
         onFinally: (() -> Unit)? = null,
     ) {
         val app = context.applicationContext
+
+        // One SMS reaches us up to five times: SmsReceiver catches it, then the
+        // notification listener catches the Messages app's notification, which
+        // Android re-posts as it updates. Measured on device, 5 hits in 13 s.
+        // Without this the block screen would open five times in front of a judge.
+        if (isDuplicate(body)) {
+            onFinally?.let { main.post(it) }
+            return
+        }
+
         worker.execute {
             val verdict = try {
                 detector.check(Normaliser.normalise(sender, body))

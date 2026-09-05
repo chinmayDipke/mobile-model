@@ -18,7 +18,13 @@ class AirgapNotificationListener : NotificationListenerService() {
         "com.phonepe.app",
         "in.org.npci.upiapp",                     // BHIM
         "com.google.android.apps.messaging",
-        "com.android.messaging"
+        "com.android.messaging",
+        // Carriers filter phishing SMS sent from personal numbers, so a lot of
+        // real UPI fraud now arrives over WhatsApp instead - and it is the only
+        // path we can demo when the operator blocks our own test SMS.
+        "com.whatsapp",
+        "com.whatsapp.w4b",
+        "org.telegram.messenger",
     )
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
@@ -31,6 +37,9 @@ class AirgapNotificationListener : NotificationListenerService() {
 
         val body = (title + " " + text).trim()
         Log.i("Airgap", "notification from " + sbn.packageName)
-        Airgap.handleMessage(applicationContext, sbn.packageName, body)
+        // MUST be the async form. onNotificationPosted is on this service's main
+        // thread; the blocking version would freeze it for ~400 ms with Gemma,
+        // and Android kills a notification listener that stops responding.
+        Airgap.handleMessageAsync(applicationContext, sbn.packageName, body)
     }
 }
