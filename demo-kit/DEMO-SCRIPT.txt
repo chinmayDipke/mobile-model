@@ -2,7 +2,7 @@
 
 Two people. **Shan talks. Chinmay drives the second phone.** Never both talking.
 
-Total **3:30**. The final pitch window is 3–5 minutes, so this leaves room to be
+Total **3:50**. The final pitch window is 3–5 minutes, so this leaves room to be
 interrupted and still finish.
 
 ---
@@ -19,6 +19,8 @@ interrupted and still finish.
 - [ ] Loaner volume **up** (the warning is spoken)
 - [ ] Loaner screen timeout set long, screen unlocked
 - [ ] Battery > 40%
+- [ ] **History has entries in it.** Fire two scams before you go up - an empty
+      list is a worse ending than no ending. Open the app once and check.
 
 ---
 
@@ -122,7 +124,26 @@ they ask.
 
 ---
 
-### 3:10 — Close  *(20s)*
+### 3:10 — The history  *(20s)*
+
+Open Airgap → **What Airgap has blocked**. Hand them the phone.
+
+> "Everything it has caught. Type, reason, the message, where it came from —
+> WhatsApp, SMS, the camera, or shared in from another app."
+
+Then point at the green line under the count:
+
+> "*On this phone. This list has never left it.* Every other app that keeps a
+> history like this keeps it on a server. Ours is a file in the app's own
+> directory that nothing else can read."
+
+**Why this beat is here and not earlier:** it turns four demos into one product.
+The judge stops watching a trick and starts looking at something that has been
+running. Let them scroll. Don't fill the silence.
+
+---
+
+### 3:30 — Close  *(20s)*
 
 > "Gemma 3 1B, int4, on the Snapdragon 8 Elite you handed us. Loads in about a
 > second and a half, answers in under half a second, and the codebase has no
@@ -153,6 +174,7 @@ then everything else you said is in doubt.
 | Block screen doesn't appear | Force-close Airgap, reopen, retry once. Then use the button |
 | Voice doesn't speak | Carry on. Don't mention it |
 | Model shows `Rules (stub)` | Say "the rules engine is running; the model loads on open" — then open the app |
+| History is empty | Skip that beat entirely. Go straight to the close |
 | Everything fails | Show the numbers and `RUN ALL 55 TEST MESSAGES` live. That still works |
 
 **Never say "it worked earlier".** Move to the next thing and keep going.
@@ -167,6 +189,21 @@ then everything else you said is in doubt.
 | "Zero false alarms." | "very accurate" |
 | "Rules caught zero of ten. With the model, seven." | "the AI helps" |
 | "1.5 seconds to load, under half a second per message." | "it's fast" |
+
+---
+
+## The 60-second version, for Eval Round 2 at the table
+
+There will not be time for the full run. Do this:
+
+1. Scam on WhatsApp → block screen + voice
+2. Clean message into the same chat → nothing
+3. Open **What Airgap has blocked** → hand them the phone
+4. "40 of 40 scams, 15 of 15 genuine messages passed, zero false alarms — and
+   all of it decided on this phone."
+
+If they lean in, add the digital-arrest message and the rules-caught-zero-of-ten
+line. Otherwise stop.
 
 ---
 
