@@ -56,6 +56,25 @@
         <!-- Keeps the process alive while Gemma thinks. Without this Android
              kills the process (it is holding a 529MB model) and the block
              screen silently never appears. -->
+        <!-- Share to Airgap: check a message from ANY app. The notification
+             listener can only ever see apps we named; sharing is the one route
+             the platform gives every app for free. -->
+        <activity
+            android:name=".CheckActivity"
+            android:exported="true"
+            android:label="Check with Airgap">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PROCESS_TEXT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".QrScanActivity"
             android:exported="false"
