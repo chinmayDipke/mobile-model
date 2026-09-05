@@ -25,6 +25,25 @@ class CheckActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_check)
+        check()
+    }
+
+    /**
+     * Share something while this screen is already open and Android reuses the
+     * instance instead of building a new one - onCreate never runs and the
+     * second message is silently never checked. Found while testing two shares
+     * back to back.
+     */
+    override fun onNewIntent(newIntent: Intent) {
+        super.onNewIntent(newIntent)
+        setIntent(newIntent)
+        check()
+    }
+
+    private fun check() {
+        findViewById<TextView>(R.id.checkTitle).text = "Checking"
+        findViewById<TextView>(R.id.checkQuote).text = ""
+        findViewById<TextView>(R.id.checkEngine).text = ""
 
         val shared = readSharedText()
         if (shared.isNullOrBlank()) {
