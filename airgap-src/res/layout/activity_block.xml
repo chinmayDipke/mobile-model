@@ -1,60 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  The full-screen interrupt. This is the screen a judge actually looks at, and
-  the screen a frightened person reads at the worst possible moment.
+  The full-screen interrupt — the screen a judge looks at, and the screen a
+  frightened person reads at the worst possible moment.
 
-  Design intent:
-   - Calm, not shouting. Red-alert styling makes people panic and tap anything
-     to make it go away. Amber on near-black reads as "the system is telling
-     you something", which is the tone that actually gets read.
-   - The REASON is the largest body text on the screen. Our users are
-     first-time and older users, and this same sentence is read aloud.
-   - The scam text is quoted with an accent bar and de-emphasised, so it is
-     clearly THEIR words, not ours.
-   - The trust block at the bottom is evidence, not decoration: which engine
-     decided, and that nothing left the phone.
+  Same type scale and spacing as the other two screens, so this reads as the
+  same app rather than a separate alert dialog someone bolted on. What makes it
+  different is weight, not a different design language: bigger headline, more
+  air, one action.
+
+  Calm, not shouting. Red-alert styling makes people panic and tap whatever
+  removes it — which is the behaviour we exist to prevent.
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="28dp"
-        android:paddingRight="28dp"
-        android:paddingTop="40dp"
-        android:paddingBottom="32dp">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <View
-                android:layout_width="18dp"
-                android:layout_height="3dp"
-                android:background="@color/accent" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:letterSpacing="0.3"
-                android:text="AIRGAP"
-                android:textColor="@color/accent"
-                android:textSize="13sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+        android:paddingStart="24dp"
+        android:paddingTop="44dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="36dp">
 
         <ImageView
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_marginTop="32dp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
             android:contentDescription="Warning"
             android:src="@drawable/ic_warning_shield" />
 
@@ -62,97 +37,87 @@
             android:id="@+id/patternLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:letterSpacing="-0.01"
-            android:lineSpacingMultiplier="1.1"
-            android:text="SCAM BLOCKED"
+            android:layout_marginTop="22dp"
+            android:letterSpacing="-0.02"
+            android:lineSpacingMultiplier="1.08"
+            android:text="Scam blocked"
             android:textColor="@color/text_primary"
-            android:textSize="30sp"
+            android:textSize="32sp"
             android:textStyle="bold" />
 
-        <View
-            android:layout_width="44dp"
-            android:layout_height="3dp"
-            android:layout_marginTop="18dp"
-            android:background="@color/accent" />
-
+        <!-- the sentence that is also read aloud -->
         <TextView
             android:id="@+id/reasonText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="14dp"
             android:lineSpacingMultiplier="1.45"
             android:textColor="@color/text_primary"
-            android:textSize="20sp" />
+            android:textSize="19sp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:letterSpacing="0.16"
-            android:text="THE MESSAGE"
-            android:textColor="@color/text_tertiary"
-            android:textSize="11sp"
-            android:textStyle="bold" />
+            style="@style/SectionLabel"
+            android:layout_marginStart="0dp"
+            android:text="THE MESSAGE" />
 
         <TextView
             android:id="@+id/messageText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="6dp"
             android:background="@drawable/bg_quote"
             android:lineSpacingMultiplier="1.35"
-            android:paddingLeft="20dp"
+            android:paddingStart="20dp"
             android:paddingTop="16dp"
-            android:paddingRight="16dp"
+            android:paddingEnd="16dp"
             android:paddingBottom="16dp"
             android:textColor="@color/text_secondary"
             android:textSize="15sp" />
 
-        <LinearLayout
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="28dp"
+            android:background="@color/hairline" />
+
+        <TextView
+            android:id="@+id/metaText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:background="@drawable/bg_card"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_marginTop="16dp"
+            android:lineSpacingMultiplier="1.35"
+            android:textColor="@color/text_tertiary"
+            android:textSize="13sp" />
 
-            <TextView
-                android:id="@+id/metaText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:lineSpacingMultiplier="1.3"
-                android:textColor="@color/text_secondary"
-                android:textSize="13sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="No network was used."
-                android:textColor="@color/ok"
-                android:textSize="13sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="No network was used."
+            android:textColor="@color/ok"
+            android:textSize="13sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/closeButton"
             android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:layout_marginTop="28dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/btn_primary"
+            android:letterSpacing="0"
             android:text="Close this"
             android:textAllCaps="false"
-            android:textColor="@color/bg"
-            android:textSize="17sp"
+            android:textColor="@color/on_accent_fill"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/ignoreButton"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:letterSpacing="0"
             android:text="I understand the risk, continue"
             android:textAllCaps="false"
             android:textColor="@color/text_tertiary"

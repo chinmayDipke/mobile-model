@@ -58,14 +58,19 @@ class BlockActivity : AppCompatActivity() {
         speak(reason)
     }
 
+    /**
+     * Sentence case, not shouting caps. The same words in caps read as an
+     * error dialog; like this they read as the phone telling you something,
+     * which is the tone that actually gets read rather than dismissed.
+     */
     private fun prettyPattern(p: String) = when (p) {
-        "kyc_link" -> "FAKE KYC LINK"
-        "qr_cashback" -> "CASHBACK QR SCAM"
-        "collect_refund" -> "REFUND THAT TAKES MONEY"
-        "fake_care" -> "FAKE CUSTOMER CARE"
-        "wrong_transfer" -> "WRONG TRANSFER TRICK"
-        "qr_send_only" -> "THIS QR ONLY SENDS MONEY"
-        else -> "SCAM BLOCKED"
+        "kyc_link" -> "Fake KYC link"
+        "qr_cashback" -> "Cashback QR scam"
+        "collect_refund" -> "A refund that takes money"
+        "fake_care" -> "Fake customer care"
+        "wrong_transfer" -> "Wrong transfer trick"
+        "qr_send_only" -> "This QR only sends money"
+        else -> "Scam blocked"
     }
 
     private fun speak(text: String) {

@@ -1,113 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Same shape as the main screen: big title, labelled sections, rows separated by
+  hairlines rather than a card drawn around every single item. Cards inside
+  cards is what made the old version look generic.
+-->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:paddingTop="40dp"
-        android:paddingBottom="32dp">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="18dp"
-                android:layout_height="3dp"
-                android:background="@color/accent" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:letterSpacing="0.3"
-                android:text="AIRGAP"
-                android:textColor="@color/accent"
-                android:textSize="13sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+        android:paddingBottom="40dp">
 
         <TextView
             android:id="@+id/historyCount"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="26dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="48dp"
+            android:letterSpacing="-0.02"
             android:textColor="@color/text_primary"
-            android:textSize="30sp"
+            android:textSize="32sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/historySub"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="24dp"
             android:lineSpacingMultiplier="1.35"
             android:textColor="@color/ok"
-            android:textSize="14sp" />
+            android:textSize="15sp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:letterSpacing="0.16"
-            android:text="WHAT AIRGAP ACTUALLY READ"
-            android:textColor="@color/text_tertiary"
-            android:textSize="11sp"
-            android:textStyle="bold" />
+            style="@style/SectionLabel"
+            android:text="WHAT AIRGAP READ" />
 
         <LinearLayout
             android:id="@+id/statsBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/bg_card"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/bg_surface"
             android:orientation="vertical"
-            android:padding="18dp" />
+            android:paddingStart="18dp"
+            android:paddingTop="14dp"
+            android:paddingEnd="18dp"
+            android:paddingBottom="16dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:lineSpacingMultiplier="1.3"
-            android:text="Something has to look in order to decide. For an ignored message that is a 20-line check that asks one question and keeps nothing: no model, no storage, no log, no network. Only the count survives."
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
+            android:lineSpacingMultiplier="1.35"
+            android:text="Something has to look in order to decide. For an ignored message that is a short check which asks one question and keeps nothing — no model, no storage, no log, no network. Only the count survives."
             android:textColor="@color/text_tertiary"
-            android:textSize="12sp" />
+            android:textSize="13sp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:letterSpacing="0.16"
-            android:text="BLOCKED"
-            android:textColor="@color/text_tertiary"
-            android:textSize="11sp"
-            android:textStyle="bold" />
+            style="@style/SectionLabel"
+            android:text="BLOCKED" />
 
         <LinearLayout
             android:id="@+id/historyList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="4dp"
             android:orientation="vertical" />
 
-        <Button
+        <LinearLayout
             android:id="@+id/historyClear"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Clear history"
-            android:textAllCaps="false"
-            android:textColor="@color/text_tertiary"
-            android:textSize="14sp" />
+            style="@style/Row"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                style="@style/RowLabel"
+                android:text="Clear history"
+                android:textColor="@color/text_tertiary" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

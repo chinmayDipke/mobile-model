@@ -4,8 +4,8 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
+import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -40,8 +40,8 @@ class HistoryActivity : AppCompatActivity() {
         val entries = History.all(this)
 
         findViewById<TextView>(R.id.historyCount).text =
-            if (entries.isEmpty()) "Nothing blocked yet"
-            else "${entries.size} " + if (entries.size == 1) "scam blocked" else "scams blocked"
+            if (entries.isEmpty()) "Nothing blocked"
+            else entries.size.toString() + if (entries.size == 1) " scam blocked" else " scams blocked"
 
         findViewById<TextView>(R.id.historySub).text =
             if (entries.isEmpty())
@@ -55,7 +55,7 @@ class HistoryActivity : AppCompatActivity() {
         list.removeAllViews()
         entries.forEach { list.addView(row(it)) }
 
-        findViewById<Button>(R.id.historyClear).setOnClickListener {
+        findViewById<LinearLayout>(R.id.historyClear).setOnClickListener {
             History.clear(this)
             render()
         }
@@ -119,27 +119,42 @@ class HistoryActivity : AppCompatActivity() {
         return row
     }
 
+    /**
+     * A list row, not a card. The screen already has one surface for the stats;
+     * wrapping every entry in another one is how the old version ended up
+     * looking like a template.
+     */
     private fun row(e: History.Entry): LinearLayout {
-        val card = LinearLayout(this).apply {
+        val wrap = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            setBackgroundResource(R.drawable.bg_card)
-            setPadding(dp(16), dp(14), dp(16), dp(14))
             layoutParams = LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
-            ).apply { bottomMargin = dp(10) }
+            )
         }
 
-        card.addView(line(prettyPattern(e.pattern), 15f, R.color.accent, bold = true))
-        card.addView(line(e.reason, 14f, R.color.text_secondary, topMargin = dp(6)))
-        card.addView(line("“" + e.message + "”", 13f, R.color.text_tertiary, topMargin = dp(10)))
-        card.addView(
+        val body = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dp(24), dp(16), dp(24), dp(16))
+        }
+        body.addView(line(prettyPattern(e.pattern), 13f, R.color.accent, bold = true))
+        body.addView(line(e.reason, 15f, R.color.text_primary, topMargin = dp(6)))
+        body.addView(line("“" + e.message + "”", 13f, R.color.text_tertiary, topMargin = dp(10)))
+        body.addView(
             line(
                 time.format(Date(e.at)) + "  ·  " + prettySource(e.source) + "  ·  " + e.engine,
-                12f, R.color.text_tertiary, topMargin = dp(10)
+                11f, R.color.text_tertiary, topMargin = dp(8)
             )
         )
-        return card
+        wrap.addView(body)
+
+        wrap.addView(View(this).apply {
+            setBackgroundColor(ContextCompat.getColor(this@HistoryActivity, R.color.hairline))
+            layoutParams = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, dp(1)
+            ).apply { marginStart = dp(24); marginEnd = dp(24) }
+        })
+        return wrap
     }
 
     private fun line(
@@ -159,13 +174,13 @@ class HistoryActivity : AppCompatActivity() {
     }
 
     private fun prettyPattern(p: String) = when (p) {
-        "kyc_link" -> "FAKE KYC LINK"
-        "qr_cashback" -> "CASHBACK QR SCAM"
-        "collect_refund" -> "REFUND THAT TAKES MONEY"
-        "fake_care" -> "FAKE CUSTOMER CARE"
-        "wrong_transfer" -> "WRONG TRANSFER TRICK"
-        "qr_send_only" -> "QR THAT ONLY SENDS MONEY"
-        else -> "SCAM BLOCKED"
+        "kyc_link" -> "Fake KYC link"
+        "qr_cashback" -> "Cashback QR scam"
+        "collect_refund" -> "A refund that takes money"
+        "fake_care" -> "Fake customer care"
+        "wrong_transfer" -> "Wrong transfer trick"
+        "qr_send_only" -> "This QR only sends money"
+        else -> "Scam blocked"
     }
 
     private fun prettySource(s: String) = when {
