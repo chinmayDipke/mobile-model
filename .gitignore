@@ -1,0 +1,27 @@
+# ---- MODEL WEIGHTS: NEVER COMMIT ----
+# GitHub hard-rejects files over 100MB. Our models are 529MB-1.5GB.
+# A single accidental `git add .` will wedge the repo and cost us an hour.
+*.task
+*.litertlm
+*.tflite
+*.bin
+*.gguf
+models/
+iqoo-models/
+
+# ---- machine-specific: differs between Shan and Chinmay ----
+local.properties
+
+# ---- Android / Gradle build output ----
+*.apk
+*.aab
+build/
+.gradle/
+.cxx/
+captures/
+.externalNativeBuild/
+
+# ---- IDE ----
+.idea/
+*.iml
+.DS_Store
