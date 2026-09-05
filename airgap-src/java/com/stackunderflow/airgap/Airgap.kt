@@ -13,6 +13,25 @@ object Airgap {
     @Volatile
     var detector: Detector = StubDetector()
 
+    /**
+     * Call once at app start, OFF the main thread (loading Gemma takes ~1.5 s).
+     *
+     * Uses the on-device model if its file is present, otherwise stays on the
+     * rules stub - so the app always works, including on a phone we have not
+     * pushed the model to yet. Never leaves the app with no detector at all.
+     */
+    fun initDetector(context: Context) {
+        detector = try {
+            if (GemmaDetector.isAvailable()) {
+                GemmaDetector(context.applicationContext).also { it.preload() }
+            } else {
+                StubDetector()
+            }
+        } catch (t: Throwable) {
+            StubDetector()
+        }
+    }
+
     fun handleMessage(context: Context, sender: String, body: String): Verdict {
         val normalised = Normaliser.normalise(sender, body)
         val verdict = detector.check(normalised)
