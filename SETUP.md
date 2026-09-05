@@ -166,6 +166,7 @@ mid-detection and the block screen silently never appears.
 | `CHINMAY-READ-NOW.md` | **current** — Shan's threading rules, read before adding features |
 | `CHINMAY-TODO.md` | **current** — job list and demo order |
 | `SHAN-READ-NOW.md` | **current** — Chinmay's reply: what got merged |
+| `CONCERN.md` | **current** — the evaluator's three concerns (privacy, new patterns, self-learning) and the fixes |
 | `Device-Facts.md` | current — chips, toolchain |
 | `testset/README.md` | current — and it flags that the 55 messages are synthetic |
 | `Team-Handover.md` | **historical.** Written before the repo was a Gradle project. Its setup steps are stale; keep it for the event plan and timeline only. |
