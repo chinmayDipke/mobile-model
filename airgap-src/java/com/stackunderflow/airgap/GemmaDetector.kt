@@ -25,13 +25,21 @@ class GemmaDetector(private val context: Context) : Detector {
         fun isAvailable(): Boolean = File(MODEL_PATH).let { it.exists() && it.canRead() }
     }
 
-    /** Built once and reused - creating this per message would cost 1.5 s each time. */
+    /**
+     * Built once and reused - creating this per message would cost 1.5 s each time.
+     *
+     * maxTokens is deliberately TINY. Generation time is dominated by how many
+     * tokens come out, not by the model size. Asking for a written reason took
+     * ~12 s per message; asking for one word takes ~0.4 s. The reason text comes
+     * from REASONS below instead - which is also better wording for the
+     * first-time and older users we built this for.
+     */
     private val llm: LlmInference by lazy {
         LlmInference.createFromOptions(
             context,
             LlmInference.LlmInferenceOptions.builder()
                 .setModelPath(MODEL_PATH)
-                .setMaxTokens(256)
+                .setMaxTokens(8)
                 .build()
         )
     }
@@ -51,49 +59,57 @@ class GemmaDetector(private val context: Context) : Detector {
     }
 
     /**
-     * Short prompt on purpose. The normaliser already stripped the noise, and
-     * short input is what keeps inference near 370 ms.
+     * ONE WORD out. Generation time scales with output length, so this is the
+     * single biggest lever on speed: a written reason cost ~12 s per message,
+     * one word costs ~0.4 s.
      */
     private fun buildPrompt(m: NormalisedMessage): String = """
 You are a fraud detector for Indian bank and payment SMS.
 
-Reply with EXACTLY two lines and nothing else:
-VERDICT: <SCAM or CLEAN>
-REASON: <one short sentence a first-time phone user would understand>
-
 Rules:
-- Real banks never ask you to approve or enter a UPI PIN to RECEIVE money.
+- Real banks never ask you to approve a request or enter a UPI PIN to RECEIVE money.
 - Real banks do not send shortened or lookalike links to update KYC.
-- A personal 10-digit number given as "customer care" is a scam. 1800 numbers are normal.
+- A personal 10-digit number offered as "customer care" is a scam. 1800 numbers are normal.
 - A plain transaction alert, OTP, balance or statement message is CLEAN.
+
+Answer with ONE word only: SCAM or CLEAN.
 
 Message: "${m.compact}"
 ${if (m.urls.isNotEmpty()) "Links: ${m.urls.joinToString(", ")}" else ""}
 ${if (m.mobileNumbers.isNotEmpty()) "Personal numbers in text: ${m.mobileNumbers.joinToString(", ")}" else ""}
-""".trim()
+
+Answer:""".trim()
+
+    /**
+     * Written by us, not by the model. Three reasons:
+     *  - speed: the model only has to emit one token
+     *  - quality: a 1B model writes clumsy English; these are plain and calm,
+     *    which matters because they are also READ ALOUD to older users
+     *  - reliability: no parsing of free text on stage
+     */
+    private val REASONS = mapOf(
+        "kyc_link" to "Your bank will never ask you to update KYC through a link in an SMS. This link is fake.",
+        "qr_cashback" to "Scanning a QR code can only SEND money, never receive it. This is a trap.",
+        "collect_refund" to "This is a request for YOUR money, not a refund. Approving it will debit your account.",
+        "fake_care" to "This is a personal mobile number, not a bank helpline. Real banks use 1800 numbers.",
+        "wrong_transfer" to "The classic wrong transfer trick. No money came in. Do not send anything back.",
+    )
 
     private fun parse(answer: String, m: NormalisedMessage): Verdict {
         val upper = answer.uppercase()
         val isScam = when {
-            upper.contains("VERDICT: SCAM") -> true
-            upper.contains("VERDICT: CLEAN") -> false
-            // model ignored the format - fall back to whichever word it used
             upper.contains("SCAM") -> true
-            else -> false
+            upper.contains("CLEAN") -> false
+            else -> false   // unclear - fail open rather than block a real message
         }
         if (!isScam) return Verdict.clean()
 
-        val reason = answer.lineSequence()
-            .firstOrNull { it.trim().uppercase().startsWith("REASON:") }
-            ?.substringAfter(":")?.trim()
-            ?.takeIf { it.isNotBlank() }
-            ?: "This message looks like a payment scam."
-
+        val pattern = guessPattern(m)
         return Verdict(
             isScam = true,
-            pattern = guessPattern(m),
+            pattern = pattern,
             confidence = 0.8f,
-            reason = reason
+            reason = REASONS[pattern] ?: "This message looks like a payment scam."
         )
     }
 

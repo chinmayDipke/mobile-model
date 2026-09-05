@@ -43,13 +43,19 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.notifPermButton).setOnClickListener { askNotificationAccess() }
 
         findViewById<Button>(R.id.demoScamButton).setOnClickListener {
-            Airgap.handleMessage(this, "VK-REWARDS", demoScam)
+            status.text = "Checking on device..."
+            Airgap.handleMessageAsync(this, "VK-REWARDS", demoScam, onResult = { v ->
+                if (!v.isScam) status.text = "Model said CLEAN. It missed this one."
+            })
         }
         findViewById<Button>(R.id.demoCleanButton).setOnClickListener {
-            val v = Airgap.handleMessage(this, "VM-SBIINB", demoClean)
-            if (!v.isScam) {
-                status.text = "Clean message passed silently. Nothing was shown. That is correct."
-            }
+            status.text = "Checking on device..."
+            Airgap.handleMessageAsync(this, "VM-SBIINB", demoClean, onResult = { v ->
+                status.text = if (!v.isScam)
+                    "Clean message passed silently. Nothing was shown. That is correct."
+                else
+                    "FALSE ALARM - it blocked a genuine bank SMS. Needs tuning."
+            })
         }
         findViewById<Button>(R.id.runTestsButton).setOnClickListener { runTests() }
 
