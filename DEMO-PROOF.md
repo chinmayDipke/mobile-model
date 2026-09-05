@@ -7,6 +7,33 @@ watch happen or read off the screen. Anything you can only assert, cut.
 
 ---
 
+## 0. THE DEMO PATH IS WHATSAPP, NOT SMS. Verified on device 16:20, 5 Sept.
+
+```
+16:20:52  notification from com.whatsapp
+16:20:55  BlockActivity displayed  (+62 ms)
+```
+
+**Use WhatsApp to deliver the scam message.** Not SMS.
+
+We tested with a real SIM and found the carrier blocks our SMS: a plain
+"How are you?" arrived fine, but the KYC message with a lookalike bank domain
+never reached the handset at all. Jio filters phishing-shaped SMS from personal
+numbers. That is out of our control and could happen in front of a judge.
+
+WhatsApp cannot be filtered that way, and the path is measured at **~60 ms from
+message to block screen**, repeatedly.
+
+**This is also a better story, and it is true:** carriers got good at filtering
+SMS, so UPI fraud moved to WhatsApp. Airgap works there because it reads the
+notification on the device, not the network.
+
+PhonePe is also installed on the loaner and is already in the watched list - a
+real UPI collect request would be the strongest demo of all if you have time to
+rehearse it.
+
+---
+
 ## 1. Airplane mode — your strongest proof, and it costs nothing
 
 Turn it on. Hold the phone up. **Say nothing for two seconds.** Let them see the
