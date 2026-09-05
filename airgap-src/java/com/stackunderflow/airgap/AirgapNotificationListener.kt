@@ -60,11 +60,24 @@ class AirgapNotificationListener : NotificationListenerService() {
         // InboxStyle - one line per unread message
         e.getCharSequenceArray(Notification.EXTRA_TEXT_LINES)?.forEach { add(it) }
 
-        // MessagingStyle - what WhatsApp actually uses for chats
+        // MessagingStyle - what WhatsApp actually uses for chats.
+        //
+        // ONLY THE NEWEST MESSAGE. The style carries the whole visible thread,
+        // and taking all of it meant a chat that once contained a scam kept
+        // re-triggering: every later message dragged the old scam text along,
+        // so a genuine bank SMS in that thread got blocked too. That would have
+        // broken the one demo beat we care most about - a clean message passing
+        // silently right after a scam was caught.
         try {
-            val style = NotificationCompat.MessagingStyle
+            val messages = NotificationCompat.MessagingStyle
                 .extractMessagingStyleFromNotification(n)
-            style?.messages?.forEach { add(it.text) }
+                ?.messages
+            if (!messages.isNullOrEmpty()) {
+                // The newest message wins; drop anything we picked up from the
+                // collapsed-summary fields, which describe the thread, not it.
+                val newest = messages.last().text?.toString()?.trim().orEmpty()
+                if (newest.isNotBlank()) return newest
+            }
         } catch (_: Throwable) {
             // older/unusual notification shapes - the fields above still cover us
         }
@@ -82,7 +95,10 @@ class AirgapNotificationListener : NotificationListenerService() {
         val body = extractText(sbn.notification)
         if (body.isBlank()) return
 
-        Log.i("Airgap", "notification from " + sbn.packageName + " len=" + body.length)
+        // Log what we actually extracted. Without this, "the app did nothing"
+        // and "we never saw the text" look identical - which cost us an hour.
+        Log.i("Airgap", "notification from " + sbn.packageName + " len=" + body.length +
+                " text=[" + body.take(120) + "]")
         // MUST be the async form. onNotificationPosted is on this service's main
         // thread; the blocking version would freeze it for ~400 ms with Gemma,
         // and Android kills a notification listener that stops responding.
