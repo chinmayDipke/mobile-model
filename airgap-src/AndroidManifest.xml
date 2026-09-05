@@ -77,6 +77,10 @@
         </activity>
 
         <activity
+            android:name=".HistoryActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".QrScanActivity"
             android:exported="false"
             android:screenOrientation="portrait" />

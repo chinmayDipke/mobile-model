@@ -120,7 +120,10 @@ object Airgap {
             }
             main.post {
                 try {
-                    if (verdict.isScam) showBlock(app, verdict, body)
+                    if (verdict.isScam) {
+                        History.record(app, verdict, body, sender)
+                        showBlock(app, verdict, body)
+                    }
                     onResult?.invoke(verdict)
                 } finally {
                     onFinally?.invoke()

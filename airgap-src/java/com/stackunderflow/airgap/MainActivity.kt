@@ -67,6 +67,9 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.scanQrButton).setOnClickListener {
             startActivity(Intent(this, QrScanActivity::class.java))
         }
+        findViewById<Button>(R.id.historyButton).setOnClickListener {
+            startActivity(Intent(this, HistoryActivity::class.java))
+        }
         findViewById<Button>(R.id.runTestsButton).setOnClickListener { runTests() }
 
         refreshStatus()
