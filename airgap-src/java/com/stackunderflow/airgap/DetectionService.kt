@@ -71,18 +71,33 @@ class DetectionService : Service() {
             ACTION_RUN_TESTS -> Thread {
                 try {
                     Airgap.initDetector(applicationContext)
-                    val d = Airgap.detector
-                    Log.i(TAG, "START engine=${d.engineName}")
+                    val hybrid = Airgap.detector
+                    val rulesOnly = StubDetector()
+
+                    // ---- suite 1: the 55 known messages ----
+                    Log.i(TAG, "START engine=${hybrid.engineName}")
                     val t0 = System.currentTimeMillis()
-                    val r = TestSetRunner.run(applicationContext, d)
+                    val r = TestSetRunner.run(applicationContext, hybrid)
                     val wall = System.currentTimeMillis() - t0
                     val total = r.scamTotal + r.genuineTotal
-                    Log.i(TAG, "ENGINE      ${d.engineName}")
+                    Log.i(TAG, "ENGINE      ${hybrid.engineName}")
                     Log.i(TAG, "SCAMS       ${r.scamCaught}/${r.scamTotal}")
                     Log.i(TAG, "CLEAN       ${r.genuinePassed}/${r.genuineTotal}")
                     Log.i(TAG, "TOTAL_MS    $wall  (${wall / maxOf(total, 1)} ms per message)")
                     Log.i(TAG, "MISSED      ${if (r.missed.isEmpty()) "none" else r.missed.joinToString(", ")}")
                     Log.i(TAG, "FALSEALARMS ${if (r.falseAlarms.isEmpty()) "none" else r.falseAlarms.joinToString(", ")}")
+
+                    // ---- suite 2: scams the rules were never written for ----
+                    // This is the one that answers "so what is the AI actually for?"
+                    Log.i(TAG, "--- NOVEL SCAMS (rules have never seen these) ---")
+                    val nRules = TestSetRunner.run(applicationContext, rulesOnly, "novel-scams.json")
+                    Log.i(TAG, "RULES_ONLY  ${nRules.scamCaught}/${nRules.scamTotal}")
+                    val t1 = System.currentTimeMillis()
+                    val nHybrid = TestSetRunner.run(applicationContext, hybrid, "novel-scams.json")
+                    val wall1 = System.currentTimeMillis() - t1
+                    Log.i(TAG, "WITH_MODEL  ${nHybrid.scamCaught}/${nHybrid.scamTotal}  (${wall1 / maxOf(nHybrid.scamTotal, 1)} ms per message)")
+                    Log.i(TAG, "MODEL_ADDED ${nHybrid.scamCaught - nRules.scamCaught} extra scams caught")
+                    Log.i(TAG, "STILL_MISS  ${if (nHybrid.missed.isEmpty()) "none" else nHybrid.missed.joinToString(", ")}")
                     Log.i(TAG, "DONE")
                 } catch (t: Throwable) {
                     Log.e(TAG, "FAILED ${t::class.java.simpleName}: ${t.message}", t)

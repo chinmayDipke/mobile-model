@@ -1,0 +1,66 @@
+{
+  "note": "Scams the rules were NOT written for. Each asks the user to act, but avoids every keyword StubDetector matches. This is the set that shows whether the on-device model earns its place.",
+  "scam": [
+    {
+      "id": "N01",
+      "pattern": "job_withdraw",
+      "label": "scam",
+      "text": "Your part-time task payment of Rs.8,400 is ready. Open the app, tap Withdraw and enter your UPI PIN to move it to your bank."
+    },
+    {
+      "id": "N02",
+      "pattern": "power_cutoff",
+      "label": "scam",
+      "text": "Dear consumer, your electricity will be disconnected tonight at 9:30pm as your previous bill was not updated. Pay Rs.842 now: bit.ly/mseb-billpay"
+    },
+    {
+      "id": "N03",
+      "pattern": "courier_fee",
+      "label": "scam",
+      "text": "Your parcel could not be delivered due to an incomplete address. Update your address and pay Rs.25 redelivery: parcel-in.info/redeliver"
+    },
+    {
+      "id": "N04",
+      "pattern": "sim_upgrade",
+      "label": "scam",
+      "text": "Your SIM will stop working in 24 hours as 4G upgrade is pending. Download the upgrade app from simupdate-in.top to continue service."
+    },
+    {
+      "id": "N05",
+      "pattern": "digital_arrest",
+      "label": "scam",
+      "text": "Cyber Cell notice. A money laundering case is registered against your Aadhaar. Join the video call now to verify your identity, or a warrant will be issued."
+    },
+    {
+      "id": "N06",
+      "pattern": "loan_approved",
+      "label": "scam",
+      "text": "Congratulations, your instant loan of Rs.2,00,000 is approved. Pay the one-time processing charge of Rs.1,850 to release the amount to your account."
+    },
+    {
+      "id": "N07",
+      "pattern": "insurance_lapse",
+      "label": "scam",
+      "text": "Your LIC policy lapses today. Renew immediately at licrenew-online.xyz to keep your cover active and avoid losing the maturity benefit."
+    },
+    {
+      "id": "N08",
+      "pattern": "fastag_recharge",
+      "label": "scam",
+      "text": "Your FASTag balance is low and will be blacklisted at toll plazas. Recharge now using this link: fastag-recharge.site/pay"
+    },
+    {
+      "id": "N09",
+      "pattern": "gift_customs",
+      "label": "scam",
+      "text": "A gift parcel from abroad is held at customs. Pay Rs.3,200 clearance charge to release it. Reply YES and we will send payment steps."
+    },
+    {
+      "id": "N10",
+      "pattern": "app_update_apk",
+      "label": "scam",
+      "text": "Your banking app version is outdated and transactions will fail. Install the updated version from this link to continue banking safely."
+    }
+  ],
+  "genuine": []
+}

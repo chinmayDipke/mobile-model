@@ -25,8 +25,11 @@ data class TestSetResult(
  */
 object TestSetRunner {
 
-    fun run(context: Context, detector: Detector): TestSetResult {
-        val raw = context.assets.open("testset.json").bufferedReader().use { it.readText() }
+    fun run(context: Context, detector: Detector): TestSetResult =
+        run(context, detector, "testset.json")
+
+    fun run(context: Context, detector: Detector, asset: String): TestSetResult {
+        val raw = context.assets.open(asset).bufferedReader().use { it.readText() }
         val root = JSONObject(raw)
 
         var scamTotal = 0
