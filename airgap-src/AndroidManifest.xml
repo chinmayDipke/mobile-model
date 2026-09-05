@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
     <application
         android:allowBackup="false"
@@ -49,6 +50,14 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
+
+        <!-- Keeps the process alive while Gemma thinks. Without this Android
+             kills the process (it is holding a 529MB model) and the block
+             screen silently never appears. -->
+        <service
+            android:name=".DetectionService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
 
         <!-- Dev only: run the 55-message test set from the laptop, headless.
              adb shell am broadcast -a com.stackunderflow.airgap.RUN_TESTS \

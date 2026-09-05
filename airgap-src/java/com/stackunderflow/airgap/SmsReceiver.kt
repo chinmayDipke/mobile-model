@@ -18,17 +18,10 @@ class SmsReceiver : BroadcastReceiver() {
         val sender = messages[0].displayOriginatingAddress ?: "unknown"
         val body = messages.joinToString("") { it.displayMessageBody ?: "" }
 
-        // onReceive runs on the MAIN thread and Android kills a receiver that
-        // blocks for ~10 s. Gemma takes ~370 ms, and the very first call also
-        // loads the model. goAsync() keeps the receiver alive while we work
-        // off-thread - without it, a real incoming SMS would ANR the app.
-        val pending = goAsync()
-        Airgap.handleMessageAsync(
-            context, sender, body,
-            onResult = { v ->
-                Log.i("Airgap", "sms from=" + sender + " scam=" + v.isScam + " pattern=" + v.pattern)
-            },
-            onFinally = { pending.finish() }
-        )
+        // Hand off to a foreground service. onReceive is on the main thread and
+        // its process can be killed as soon as we return - with a 529MB model
+        // loaded, ours is first in line. goAsync() alone is not enough.
+        Log.i("Airgap", "sms from=" + sender)
+        DetectionService.check(context.applicationContext, sender, body)
     }
 }

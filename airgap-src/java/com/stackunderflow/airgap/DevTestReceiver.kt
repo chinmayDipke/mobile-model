@@ -28,30 +28,9 @@ class DevTestReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action != ACTION) return
-        val app = context.applicationContext
-
-        Thread {
-            try {
-                Airgap.initDetector(app)
-                val d = Airgap.detector
-                Log.i(TAG, "START engine=${d.engineName}")
-
-                val t0 = System.currentTimeMillis()
-                val r = TestSetRunner.run(app, d)
-                val wall = System.currentTimeMillis() - t0
-
-                val total = r.scamTotal + r.genuineTotal
-                Log.i(TAG, "ENGINE      ${d.engineName}")
-                Log.i(TAG, "SCAMS       ${r.scamCaught}/${r.scamTotal}")
-                Log.i(TAG, "CLEAN       ${r.genuinePassed}/${r.genuineTotal}")
-                Log.i(TAG, "TOTAL_MS    $wall  (${wall / maxOf(total, 1)} ms per message)")
-                Log.i(TAG, "MISSED      ${if (r.missed.isEmpty()) "none" else r.missed.joinToString(", ")}")
-                Log.i(TAG, "FALSEALARMS ${if (r.falseAlarms.isEmpty()) "none" else r.falseAlarms.joinToString(", ")}")
-                Log.i(TAG, "DONE")
-            } catch (t: Throwable) {
-                Log.e(TAG, "FAILED ${t::class.java.simpleName}: ${t.message}", t)
-                Log.i(TAG, "DONE")
-            }
-        }.start()
+        // Hand off to the foreground service. Doing the work here would let
+        // Android kill the process the moment onReceive returns.
+        Log.i(TAG, "handing off to DetectionService")
+        DetectionService.runTests(context.applicationContext)
     }
 }
