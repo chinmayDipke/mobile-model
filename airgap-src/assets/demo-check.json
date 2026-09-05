@@ -1,0 +1,79 @@
+{
+  "note": "The EXACT strings from demo-kit/DEMO-MESSAGES.txt. If any of these fail, the demo fails.",
+  "scam": [
+    {
+      "id": "1_qr_cashback",
+      "pattern": "1_qr_cashback",
+      "label": "scam",
+      "text": "You have won Rs5000 cashback. Scan the QR to receive the amount in your account."
+    },
+    {
+      "id": "2_kyc_link",
+      "pattern": "2_kyc_link",
+      "label": "scam",
+      "text": "Dear Customer, your account KYC has EXPIRED. Account will be blocked within 24hrs. Update now: sbi-kyc-verify.in/update"
+    },
+    {
+      "id": "3_collect",
+      "pattern": "3_collect",
+      "label": "scam",
+      "text": "You have a COLLECT REQUEST of Rs.4999 from MERCHANT REFUND. Approve to receive your refund amount."
+    },
+    {
+      "id": "4_fake_care",
+      "pattern": "4_fake_care",
+      "label": "scam",
+      "text": "Your recent transaction of Rs.24999 failed. For instant refund call our customer care 9835442621 immediately."
+    },
+    {
+      "id": "5_wrong_xfer",
+      "pattern": "5_wrong_xfer",
+      "label": "scam",
+      "text": "Sorry bhai, I sent Rs.9500 to your account by mistake. Please return it to my UPI id, family emergency."
+    },
+    {
+      "id": "6_digital_arrest",
+      "pattern": "6_digital_arrest",
+      "label": "scam",
+      "text": "Cyber Cell notice. A money laundering case is registered against your Aadhaar. Join the video call now to verify your identity, or a warrant will be issued."
+    }
+  ],
+  "genuine": [
+    {
+      "id": "7_clean_netflix",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "Rs.199 debited from HDFC Bank Card xx7723 at NETFLIX on 03-09-26. Avl limit Rs.48,801."
+    },
+    {
+      "id": "8_clean_otp",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "OTP is 449213 for txn of INR 1,299 at AMAZON. Valid 10 min. Do not share with anyone. -ICICI Bank"
+    },
+    {
+      "id": "9_clean_neft",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "INR 12,000 credited to A/c XX8832 via NEFT from RAHUL SHARMA on 04-09-26. -SBI"
+    },
+    {
+      "id": "10_clean_ccbill",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "Your credit card bill of Rs.14,320 is due on 18-09-26. Pay via the HDFC app to avoid late fee."
+    },
+    {
+      "id": "11_clean_lpg",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "Rs.1,180.00 credited to A/c XX4471 by DBT LPG SUBSIDY. Avl Bal Rs.16,204.55 -SBI"
+    },
+    {
+      "id": "12_clean_debit",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "Rs.2,500.00 debited from A/c XX4471 to VPA grocerystore@okaxis. Not you? Call 18004253800."
+    }
+  ]
+}

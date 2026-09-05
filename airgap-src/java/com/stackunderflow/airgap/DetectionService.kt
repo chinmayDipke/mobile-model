@@ -98,6 +98,14 @@ class DetectionService : Service() {
                     Log.i(TAG, "WITH_MODEL  ${nHybrid.scamCaught}/${nHybrid.scamTotal}  (${wall1 / maxOf(nHybrid.scamTotal, 1)} ms per message)")
                     Log.i(TAG, "MODEL_ADDED ${nHybrid.scamCaught - nRules.scamCaught} extra scams caught")
                     Log.i(TAG, "STILL_MISS  ${if (nHybrid.missed.isEmpty()) "none" else nHybrid.missed.joinToString(", ")}")
+
+                    // ---- suite 3: the exact strings we will send on stage ----
+                    // Anything failing here fails in front of a judge.
+                    Log.i(TAG, "--- DEMO MESSAGES (exact strings from demo-kit) ---")
+                    val d = TestSetRunner.run(applicationContext, hybrid, "demo-check.json")
+                    Log.i(TAG, "DEMO_SCAM   ${d.scamCaught}/${d.scamTotal}")
+                    Log.i(TAG, "DEMO_CLEAN  ${d.genuinePassed}/${d.genuineTotal}")
+                    Log.i(TAG, "DEMO_FAILS  ${(d.missed + d.falseAlarms).let { if (it.isEmpty()) "none" else it.joinToString(", ") }}")
                     Log.i(TAG, "DONE")
                 } catch (t: Throwable) {
                     Log.e(TAG, "FAILED ${t::class.java.simpleName}: ${t.message}", t)
