@@ -49,6 +49,8 @@ class HistoryActivity : AppCompatActivity() {
             else
                 "On this phone. This list has never left it."
 
+        renderStats()
+
         val list = findViewById<LinearLayout>(R.id.historyList)
         list.removeAllViews()
         entries.forEach { list.addView(row(it)) }
@@ -57,6 +59,60 @@ class HistoryActivity : AppCompatActivity() {
             History.clear(this)
             render()
         }
+    }
+
+    /**
+     * The answer to "does it read all my messages?" as a number rather than a
+     * promise. An evaluator asked exactly that at Eval Round 1.
+     *
+     * "ignored" is the line that matters: those messages were never normalised,
+     * never scored, never stored. The counter moved and nothing else did.
+     */
+    private fun renderStats() {
+        val s = Stats.snapshot(this)
+        val box = findViewById<LinearLayout>(R.id.statsBox)
+        box.removeAllViews()
+
+        if (s.arrived == 0) {
+            box.addView(line("No messages seen yet.", 14f, "#6E7078"))
+            return
+        }
+
+        box.addView(statRow(s.arrived, "messages arrived", "#D6D8DE", ""))
+        box.addView(statRow(s.examined, "examined", "#D6D8DE", "mentioned money or asked you to act"))
+        box.addView(statRow(s.ignored, "ignored", "#4FB477", "never read past the first check"))
+        box.addView(statRow(s.blocked, "blocked", "#F0B31C", ""))
+    }
+
+    private fun statRow(n: Int, label: String, colour: String, note: String): LinearLayout {
+        val row = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            layoutParams = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            ).apply { topMargin = dp(8) }
+        }
+
+        row.addView(TextView(this).apply {
+            text = n.toString()
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
+            setTextColor(Color.parseColor(colour))
+            setTypeface(android.graphics.Typeface.MONOSPACE, Typeface.BOLD)
+            gravity = Gravity.END
+            width = dp(56)
+        })
+
+        val text = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            layoutParams = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            ).apply { marginStart = dp(14) }
+        }
+        text.addView(line(label, 15f, colour))
+        if (note.isNotBlank()) text.addView(line(note, 12f, "#5F626B", topMargin = dp(1)))
+        row.addView(text)
+        return row
     }
 
     private fun row(e: History.Entry): LinearLayout {

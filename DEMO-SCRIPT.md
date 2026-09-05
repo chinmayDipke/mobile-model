@@ -19,8 +19,17 @@ interrupted and still finish.
 - [ ] Loaner volume **up** (the warning is spoken)
 - [ ] Loaner screen timeout set long, screen unlocked
 - [ ] Battery > 40%
-- [ ] **History has entries in it.** Fire two scams before you go up - an empty
-      list is a worse ending than no ending. Open the app once and check.
+- [ ] **Reset the history, THEN fire messages into it.** Open Airgap →
+      *What Airgap has blocked* → **Clear history**. Then send, in this order:
+      two scams, one genuine bank SMS, and two ordinary personal messages
+      ("Ma, reaching by 8", "see you tomorrow").
+      That leaves the screen reading **2 blocked · 5 arrived · 3 examined ·
+      2 ignored** — every number consistent, and the ignored count is the
+      evaluator's answer sitting on the screen.
+      **Do not skip the reset.** The blocked count at the top comes from the
+      history list and the one in the stats box comes from a counter; if you
+      have been testing, they disagree, and that is exactly the kind of thing
+      a judge notices.
 
 ---
 
@@ -136,6 +145,17 @@ Then point at the green line under the count:
 > "*On this phone. This list has never left it.* Every other app that keeps a
 > history like this keeps it on a server. Ours is a file in the app's own
 > directory that nothing else can read."
+
+Now point at the **ignored** row — this is the answer to the evaluator from
+Round 1 who said *"it reads all my SMS, put filters on it"*:
+
+> "Five messages arrived. Three were examined, because they mentioned money or
+> asked me to do something. Two were ignored — those were 'Ma, reaching by 8'
+> and 'see you tomorrow'. Ignored means dropped before they were read. No text
+> is stored for them, only the count.
+>
+> And if you open App Info, there is no INTERNET permission on this app at all.
+> That is not us promising — the OS will refuse the socket."
 
 **Why this beat is here and not earlier:** it turns four demos into one product.
 The judge stops watching a trick and starts looking at something that has been

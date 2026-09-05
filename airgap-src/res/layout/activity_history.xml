@@ -54,11 +54,49 @@
             android:textColor="#4FB477"
             android:textSize="14sp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:letterSpacing="0.16"
+            android:text="WHAT AIRGAP ACTUALLY READ"
+            android:textColor="#6E7078"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/statsBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical"
+            android:padding="18dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:lineSpacingMultiplier="1.3"
+            android:text="An ignored message is dropped before it is read. No text is stored for it - only the count."
+            android:textColor="#5F626B"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:letterSpacing="0.16"
+            android:text="BLOCKED"
+            android:textColor="#6E7078"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
         <LinearLayout
             android:id="@+id/historyList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="26dp"
+            android:layout_marginTop="12dp"
             android:orientation="vertical" />
 
         <Button
