@@ -1,0 +1,344 @@
+{
+  "note": "Synthetic test fixtures for the Airgap scam-SMS classifier. Phone numbers are masked and non-dialable. Test data only - not application source.",
+  "patterns": [
+    "kyc_link",
+    "qr_cashback",
+    "collect_refund",
+    "fake_care",
+    "wrong_transfer"
+  ],
+  "scam": [
+    {
+      "id": "S01",
+      "pattern": "kyc_link",
+      "label": "scam",
+      "text": "Dear Customer, your SBI YONO account KYC has EXPIRED. Account will be blocked within 24hrs. Update now: http://sbi-kyc-verify.in/update"
+    },
+    {
+      "id": "S02",
+      "pattern": "kyc_link",
+      "label": "scam",
+      "text": "URGENT: Your PAN card is not linked with your bank account. A/c suspension today. Complete KYC: bit.ly/kyc-relink-now"
+    },
+    {
+      "id": "S03",
+      "pattern": "kyc_link",
+      "label": "scam",
+      "text": "HDFC ALERT: Your netbanking will be deactivated tonight due to incomplete KYC. Click http://hdfc-secure-kyc.co.in to re-verify immediately."
+    },
+    {
+      "id": "S04",
+      "pattern": "kyc_link",
+      "label": "scam",
+      "text": "Your Paytm KYC is pending. Wallet frozen from tomorrow. Verify Aadhaar here: paytm-kycupdate.xyz/verify"
+    },
+    {
+      "id": "S05",
+      "pattern": "kyc_link",
+      "label": "scam",
+      "text": "ICICI: Dear user your account no XX4471 KYC expired. Download & update via this link http://icici-kycapp.in/apk to avoid deactivation."
+    },
+    {
+      "id": "S06",
+      "pattern": "kyc_link",
+      "label": "scam",
+      "text": "Attention! Aadhaar not updated with bank. Rs.0 balance risk. Update at https://uidai-bankverify.net/kyc within 12 hours."
+    },
+    {
+      "id": "S07",
+      "pattern": "kyc_link",
+      "label": "scam",
+      "text": "Axis Bank: KYC document mismatch found. Account debit freeze in 6 hours. Rectify: axisbank-kycportal.in/fix"
+    },
+    {
+      "id": "S08",
+      "pattern": "kyc_link",
+      "label": "scam",
+      "text": "Your bank account will be closed today due to KYC failure. Last chance to update: http://onlinekyc-update.in/?ref=99213"
+    },
+    {
+      "id": "S09",
+      "pattern": "qr_cashback",
+      "label": "scam",
+      "text": "Congratulations! You have won Rs.5,000 cashback. Scan the QR sent on WhatsApp to receive amount in your account instantly."
+    },
+    {
+      "id": "S10",
+      "pattern": "qr_cashback",
+      "label": "scam",
+      "text": "Your Rs.2999 refund is ready. Scan attached QR code from PhonePe to credit the amount to your bank."
+    },
+    {
+      "id": "S11",
+      "pattern": "qr_cashback",
+      "label": "scam",
+      "text": "Amazon Big Billing Winner! Rs.10,000 reward pending. Scan QR to claim before midnight."
+    },
+    {
+      "id": "S12",
+      "pattern": "qr_cashback",
+      "label": "scam",
+      "text": "GPay Reward: Rs.1,500 scratch card won. Scan this QR using any UPI app to transfer reward to your wallet."
+    },
+    {
+      "id": "S13",
+      "pattern": "qr_cashback",
+      "label": "scam",
+      "text": "Electricity bill overcharge refund Rs.3,240 approved. Scan QR code to receive refund directly in account."
+    },
+    {
+      "id": "S14",
+      "pattern": "qr_cashback",
+      "label": "scam",
+      "text": "You have cashback of Rs.799 waiting. Open UPI app > Scan QR > Enter PIN to receive money."
+    },
+    {
+      "id": "S15",
+      "pattern": "qr_cashback",
+      "label": "scam",
+      "text": "Dear Customer your LPG subsidy Rs.1,180 is pending. Scan the QR to get subsidy credited today."
+    },
+    {
+      "id": "S16",
+      "pattern": "qr_cashback",
+      "label": "scam",
+      "text": "Diwali Offer! Scan QR & enter your UPI PIN to unlock guaranteed Rs.2,000 cashback in your account."
+    },
+    {
+      "id": "S17",
+      "pattern": "collect_refund",
+      "label": "scam",
+      "text": "You have a COLLECT REQUEST of Rs.4,999 from MERCHANT REFUND. Approve to receive your refund amount."
+    },
+    {
+      "id": "S18",
+      "pattern": "collect_refund",
+      "label": "scam",
+      "text": "Refund initiated. Please accept the payment request of Rs.1,299 in your UPI app to get money back."
+    },
+    {
+      "id": "S19",
+      "pattern": "collect_refund",
+      "label": "scam",
+      "text": "Flipkart order cancelled. Refund Rs.2,450 - approve the collect request in PhonePe to credit refund."
+    },
+    {
+      "id": "S20",
+      "pattern": "collect_refund",
+      "label": "scam",
+      "text": "Your ticket cancellation refund Rs.860 is pending your approval. Enter UPI PIN to accept refund request."
+    },
+    {
+      "id": "S21",
+      "pattern": "collect_refund",
+      "label": "scam",
+      "text": "IRCTC refund of Rs.1,745 requires authorization. Approve request and enter PIN to receive."
+    },
+    {
+      "id": "S22",
+      "pattern": "collect_refund",
+      "label": "scam",
+      "text": "Insurance claim settled Rs.12,000. Accept the incoming UPI request to receive settlement in account."
+    },
+    {
+      "id": "S23",
+      "pattern": "collect_refund",
+      "label": "scam",
+      "text": "Refund pending from Swiggy Rs.310. Please approve payment request to complete refund process."
+    },
+    {
+      "id": "S24",
+      "pattern": "collect_refund",
+      "label": "scam",
+      "text": "Salary arrears Rs.8,400 credited. Authorize the request with your UPI PIN to receive amount."
+    },
+    {
+      "id": "S25",
+      "pattern": "fake_care",
+      "label": "scam",
+      "text": "Your recent transaction of Rs.24,999 failed. For instant refund call our customer care 9835xxxx21 immediately."
+    },
+    {
+      "id": "S26",
+      "pattern": "fake_care",
+      "label": "scam",
+      "text": "Paytm Help: Unable to process your complaint. Call executive on 8123xxxx77 for immediate resolution of your issue."
+    },
+    {
+      "id": "S27",
+      "pattern": "fake_care",
+      "label": "scam",
+      "text": "Your parcel is on hold at customs. Contact delivery support 7044xxxx19 to release and reschedule."
+    },
+    {
+      "id": "S28",
+      "pattern": "fake_care",
+      "label": "scam",
+      "text": "Dear user your account is temporarily blocked. Call toll free helpline 9007xxxx45 to unblock now."
+    },
+    {
+      "id": "S29",
+      "pattern": "fake_care",
+      "label": "scam",
+      "text": "Gas booking failed. Refund stuck. Call LPG customer care 8900xxxx12 within 2 hours or refund lapses."
+    },
+    {
+      "id": "S30",
+      "pattern": "fake_care",
+      "label": "scam",
+      "text": "Your SBI debit card is deactivated for security. Call 24x7 card helpdesk 9339xxxx88 to reactivate."
+    },
+    {
+      "id": "S31",
+      "pattern": "fake_care",
+      "label": "scam",
+      "text": "Electricity connection will be disconnected tonight 9:30pm as bill not updated. Contact officer 8617xxxx03 immediately."
+    },
+    {
+      "id": "S32",
+      "pattern": "fake_care",
+      "label": "scam",
+      "text": "Job offer approved! Pay registration & call HR 7980xxxx56 to confirm your joining date."
+    },
+    {
+      "id": "S33",
+      "pattern": "wrong_transfer",
+      "label": "scam",
+      "text": "Sorry bhai, I sent Rs.9,500 to your account by mistake. Please return it to my UPI id, family emergency."
+    },
+    {
+      "id": "S34",
+      "pattern": "wrong_transfer",
+      "label": "scam",
+      "text": "Sir by mistake wrong transfer ho gaya Rs.15,000 aapke account me. Kindly refund, I am a poor man."
+    },
+    {
+      "id": "S35",
+      "pattern": "wrong_transfer",
+      "label": "scam",
+      "text": "Hello, I transferred money to wrong number. Rs.7,200. Please check your account and send back urgently."
+    },
+    {
+      "id": "S36",
+      "pattern": "wrong_transfer",
+      "label": "scam",
+      "text": "Sorry wrong account. I have sent Rs.5,000. Kindly return, my daughter is in hospital. God bless you."
+    },
+    {
+      "id": "S37",
+      "pattern": "wrong_transfer",
+      "label": "scam",
+      "text": "Bhaiya galti se aapko paise chale gaye 11000. Please wapas bhej do, mera number 8823xxxx17."
+    },
+    {
+      "id": "S38",
+      "pattern": "wrong_transfer",
+      "label": "scam",
+      "text": "Dear Sir, mistakenly transferred Rs.20,000 to your a/c instead of my son. Please cooperate and reverse it."
+    },
+    {
+      "id": "S39",
+      "pattern": "wrong_transfer",
+      "label": "scam",
+      "text": "I am sorry, wrong UPI id entered. Amount Rs.3,300 credited to you. Please send back to same id immediately."
+    },
+    {
+      "id": "S40",
+      "pattern": "wrong_transfer",
+      "label": "scam",
+      "text": "Money sent to you by mistake Rs.6,750. Screenshot attached. Please refund fast, need for medicine."
+    }
+  ],
+  "genuine": [
+    {
+      "id": "G01",
+      "pattern": "genuine_bank",
+      "label": "genuine",
+      "text": "Rs.2,500.00 debited from A/c XX4471 on 05-09-26 to VPA grocerystore@okaxis. Not you? Call 18004253800."
+    },
+    {
+      "id": "G02",
+      "pattern": "genuine_bank",
+      "label": "genuine",
+      "text": "Your A/c XX8832 is credited with INR 45,000.00 on 01-09-26 by SALARY. Avl Bal INR 61,204.55 -SBI"
+    },
+    {
+      "id": "G03",
+      "pattern": "genuine_bank",
+      "label": "genuine",
+      "text": "Rs.199 debited from HDFC Bank Card xx7723 at NETFLIX on 03-09-26. Avl limit Rs.48,801."
+    },
+    {
+      "id": "G04",
+      "pattern": "genuine_bank",
+      "label": "genuine",
+      "text": "OTP is 449213 for txn of INR 1,299 at AMAZON. Valid 10 min. Do not share with anyone. -ICICI Bank"
+    },
+    {
+      "id": "G05",
+      "pattern": "genuine_bank",
+      "label": "genuine",
+      "text": "Dear Customer, your ATM withdrawal of Rs.10,000 on 04-09-26 at PUNE MG ROAD is successful. Bal: Rs.23,110."
+    },
+    {
+      "id": "G06",
+      "pattern": "genuine_bank",
+      "label": "genuine",
+      "text": "UPI txn of Rs.85.00 to zomato@ybl successful. UPI Ref 526112447890. -Axis Bank"
+    },
+    {
+      "id": "G07",
+      "pattern": "genuine_bank",
+      "label": "genuine",
+      "text": "Your monthly account statement for Aug 2026 is ready. View in the app or net banking. -Kotak Mahindra Bank"
+    },
+    {
+      "id": "G08",
+      "pattern": "genuine_bank",
+      "label": "genuine",
+      "text": "Cheque no 000412 for Rs.35,000 has been cleared from your A/c XX1190 on 02-09-26. -Bank of Baroda"
+    },
+    {
+      "id": "G09",
+      "pattern": "genuine_bank",
+      "label": "genuine",
+      "text": "Your FD of Rs.1,00,000 matures on 12-09-26. Renew via net banking or visit branch. -SBI"
+    },
+    {
+      "id": "G10",
+      "pattern": "genuine_bank",
+      "label": "genuine",
+      "text": "INR 12,000 credited to A/c XX8832 via NEFT from RAHUL SHARMA on 04-09-26. -SBI"
+    },
+    {
+      "id": "G11",
+      "pattern": "genuine_bank",
+      "label": "genuine",
+      "text": "Your credit card bill of Rs.14,320 is due on 18-09-26. Pay via the HDFC app to avoid late fee."
+    },
+    {
+      "id": "G12",
+      "pattern": "genuine_bank",
+      "label": "genuine",
+      "text": "Mini statement: 05-09 DR 250.00 UPI; 04-09 CR 12000.00 NEFT; 03-09 DR 199.00 POS. -Axis Bank"
+    },
+    {
+      "id": "G13",
+      "pattern": "genuine_bank",
+      "label": "genuine",
+      "text": "Payment of Rs.5,400 received towards Loan A/c LN00219. Next EMI due 05-10-26. -Bajaj Finance"
+    },
+    {
+      "id": "G14",
+      "pattern": "genuine_bank",
+      "label": "genuine",
+      "text": "Your debit card xx7723 has been dispatched and will be delivered in 5-7 working days. -ICICI Bank"
+    },
+    {
+      "id": "G15",
+      "pattern": "genuine_bank",
+      "label": "genuine",
+      "text": "Rs.1,180.00 credited to A/c XX4471 on 30-08-26 by DBT LPG SUBSIDY. Avl Bal Rs.16,204.55 -SBI"
+    }
+  ]
+}
