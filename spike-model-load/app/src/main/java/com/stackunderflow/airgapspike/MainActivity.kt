@@ -63,6 +63,34 @@ Answer:"""
             }
         }
 
+        fun runLiteRt(path: String, useNpu: Boolean) {
+            busy = true
+            val what = if (useNpu) "NPU (Hexagon HTP)" else "CPU"
+            log = "Loading .litertlm on " + what + " ...\nFirst NPU run compiles the graph. This can take several minutes. Do not close the app."
+            lifecycleScope.launch {
+                val r = withContext(Dispatchers.IO) {
+                    NpuRunner.run(this@MainActivity, path, PROMPT, useNpu)
+                }
+                log = buildString {
+                    appendLine("=== LiteRT-LM / ${r.backend} ===")
+                    appendLine(path)
+                    appendLine()
+                    if (r.ok) {
+                        appendLine("COLD LOAD : ${r.loadMs} ms  (${"%.1f".format(r.loadMs / 1000.0)} s)")
+                        appendLine("INFERENCE : ${r.inferMs} ms  (${"%.1f".format(r.inferMs / 1000.0)} s)")
+                        appendLine()
+                        appendLine("MODEL SAID: ${r.answer}")
+                        appendLine()
+                        appendLine(">>> WRITE THESE TWO NUMBERS DOWN <<<")
+                    } else {
+                        appendLine("FAIL on ${r.backend}")
+                        appendLine(r.error ?: "unknown")
+                    }
+                }
+                busy = false
+            }
+        }
+
         Surface(Modifier.fillMaxSize()) {
             Column(
                 Modifier.fillMaxSize().padding(20.dp).verticalScroll(rememberScrollState()),
@@ -84,6 +112,18 @@ Answer:"""
                     enabled = !busy,
                     modifier = Modifier.fillMaxWidth()
                 ) { Text("2. Load NPU model (.litertlm)") }
+
+                Button(
+                    onClick = { runLiteRt(NPU_MODEL, useNpu = true) },
+                    enabled = !busy,
+                    modifier = Modifier.fillMaxWidth()
+                ) { Text("3. NPU via LiteRT-LM  <-- THE REAL ONE") }
+
+                Button(
+                    onClick = { runLiteRt(NPU_MODEL, useNpu = false) },
+                    enabled = !busy,
+                    modifier = Modifier.fillMaxWidth()
+                ) { Text("4. Same file on CPU (for comparison)") }
 
                 if (busy) LinearProgressIndicator(Modifier.fillMaxWidth())
 
