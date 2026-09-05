@@ -658,3 +658,72 @@ once, early. He will trust the rest of it more.
 - [LLM Inference guide for Android — Google AI Edge](https://ai.google.dev/edge/mediapipe/solutions/genai/llm_inference/android) — LoRA support for Gemma variants, GPU backend, attention layers only
 - [New AI-Powered Scam Detection Features to Help Protect You on Android — Google Security Blog](https://security.googleblog.com/2025/03/new-ai-powered-scam-detection-features.html) — Google's own on-device scam detection, same architecture we chose
 - [Safer with Google: new real-time protections on Android](https://security.googleblog.com/2024/11/new-real-time-protections-on-Android.html) — on-device processing, nothing recorded or sent
+
+---
+
+# Addendum — the model, and an honesty correction
+
+Added after Shan asked two questions that a judge will also ask.
+
+## What the LLM actually is
+
+| | |
+|---|---|
+| Model | **Gemma 3 1B Instruct** (Google) |
+| Parameters | **~1 billion** |
+| Quantisation | **int4** (4-bit) |
+| File on the phone | `gemma3-1b-it-int4.task`, **529 MB**, at `/data/local/tmp/llm/` |
+| Runtime | MediaPipe LLM Inference, `tasks-genai:0.10.29` |
+| Runs on | the CPU (XNNPACK). **Not the NPU** |
+| Decoding | greedy, one word out: `SCAM` or `CLEAN` |
+| Cold load | ~1579 ms · single inference ~370 ms |
+
+## We did NOT fine-tune it. Say so plainly.
+
+Zero training, zero fine-tuning. The model is exactly as Google shipped it.
+What we wrote is the **prompt** — four worked examples, two scam and two clean.
+That is few-shot prompting, not training.
+
+> **Say this:** "No. The model is stock. We did not fine-tune it — inside a
+> 17-hour event that would not have been honest work, and we did not need to.
+> We gave it four examples in the prompt, and the architecture does the rest:
+> rules for precision, the model for coverage."
+
+Claiming we fine-tuned it is the easiest lie for a judge to unpick — one
+follow-up question about the dataset and everything else we said is in doubt.
+
+## The correction: "never read" was wrong
+
+We had written that an ignored message is "never read". **That is not true, and
+Shan caught it.** To decide whether a message mentions money, `ScopeFilter` reads
+the whole body. It has to. Any on-device filter has to.
+
+The honest claim is narrower and still worth making:
+
+> **Say this:** "Something has to look, or there is no protection. The question
+> is what looks and what happens next. For an ignored message it is a twenty-line
+> function that asks one yes/no question and keeps nothing. It is never
+> normalised, never scored by the model, never written to disk, and it cannot
+> leave the phone — there is no INTERNET permission on the app at all. Compare
+> that to the alternative, which is uploading the whole message to a server."
+
+Both on-screen strings have been fixed to match:
+
+- stats row: "checked for a money signal, then discarded"
+- footnote: "Something has to look in order to decide. For an ignored message
+  that is a 20-line check that asks one question and keeps nothing: no model,
+  no storage, no log, no network. Only the count survives."
+
+## Why the three test messages were ignored
+
+`ScopeFilter` has two ways in: the message mentions **money**, or it asks you to
+**do something**. Miss both and it is dropped.
+
+| Message | amount | link | money word | action word | result |
+|---|---|---|---|---|---|
+| "Ma reaching by 8 dont wait for dinner" | no | no | no | no | ignored |
+| "See you at the library tomorrow" | no | no | no | no | ignored |
+| "Happy birthday bro have a great one" | no | no | no | no | ignored |
+
+The three that were examined carried `Rs5000`, `sbi-kyc-verify.in`, and
+`debited`/`Card` respectively.

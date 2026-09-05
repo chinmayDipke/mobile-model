@@ -65,8 +65,12 @@ class HistoryActivity : AppCompatActivity() {
      * The answer to "does it read all my messages?" as a number rather than a
      * promise. An evaluator asked exactly that at Eval Round 1.
      *
-     * "ignored" is the line that matters: those messages were never normalised,
-     * never scored, never stored. The counter moved and nothing else did.
+     * "ignored" is the line that matters - but be careful how it is worded.
+     * The scope filter DOES read the body; it has to, in order to decide. What
+     * is true is narrower and still worth saying: an ignored message is never
+     * normalised, never scored by the model, never written to disk, and cannot
+     * leave the phone. Claiming it is "never read" would be a lie a sharp judge
+     * would catch in one question.
      */
     private fun renderStats() {
         val s = Stats.snapshot(this)
@@ -80,7 +84,7 @@ class HistoryActivity : AppCompatActivity() {
 
         box.addView(statRow(s.arrived, "messages arrived", "#D6D8DE", ""))
         box.addView(statRow(s.examined, "examined", "#D6D8DE", "mentioned money or asked you to act"))
-        box.addView(statRow(s.ignored, "ignored", "#4FB477", "never read past the first check"))
+        box.addView(statRow(s.ignored, "ignored", "#4FB477", "checked for a money signal, then discarded"))
         box.addView(statRow(s.blocked, "blocked", "#F0B31C", ""))
     }
 

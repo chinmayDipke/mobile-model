@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:lineSpacingMultiplier="1.3"
-            android:text="An ignored message is dropped before it is read. No text is stored for it - only the count."
+            android:text="Something has to look in order to decide. For an ignored message that is a 20-line check that asks one question and keeps nothing: no model, no storage, no log, no network. Only the count survives."
             android:textColor="#5F626B"
             android:textSize="12sp" />
 
