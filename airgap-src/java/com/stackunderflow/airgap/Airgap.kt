@@ -36,14 +36,14 @@ object Airgap {
      * pushed the model to yet. Never leaves the app with no detector at all.
      */
     fun initDetector(context: Context) {
+        val rules = StubDetector()
         detector = try {
-            if (GemmaDetector.isAvailable()) {
+            val model = if (GemmaDetector.isAvailable()) {
                 GemmaDetector(context.applicationContext).also { it.preload() }
-            } else {
-                StubDetector()
-            }
+            } else null
+            HybridDetector(rules, model)
         } catch (t: Throwable) {
-            StubDetector()
+            HybridDetector(rules, null)   // model missing or failed to load
         }
     }
 
