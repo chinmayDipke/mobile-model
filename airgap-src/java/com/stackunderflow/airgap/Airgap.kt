@@ -102,6 +102,17 @@ object Airgap {
     ) {
         val app = context.applicationContext
 
+        // GATE 0. Before anything else: is this even our business? A message
+        // that neither mentions money nor asks you to do something is dropped
+        // here - never normalised, never scored, never stored. Only the counter
+        // moves, and the counter holds no text.
+        val scope = ScopeFilter.decide(sender, body)
+        Stats.recordArrival(app, scope.examine)
+        if (!scope.examine) {
+            onFinally?.let { main.post(it) }
+            return
+        }
+
         // One SMS reaches us up to five times: SmsReceiver catches it, then the
         // notification listener catches the Messages app's notification, which
         // Android re-posts as it updates. Measured on device, 5 hits in 13 s.
@@ -121,6 +132,7 @@ object Airgap {
             main.post {
                 try {
                     if (verdict.isScam) {
+                        Stats.recordBlocked(app)
                         History.record(app, verdict, body, sender)
                         showBlock(app, verdict, body)
                     }

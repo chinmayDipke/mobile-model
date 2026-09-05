@@ -97,7 +97,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun askSmsPermission() {
         ActivityCompat.requestPermissions(
-            this, arrayOf(Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS), 1
+            // RECEIVE_SMS delivers the broadcast. READ_SMS would open the whole
+            // inbox history - we never read it, so we no longer ask for it.
+            this, arrayOf(Manifest.permission.RECEIVE_SMS), 1
         )
     }
 

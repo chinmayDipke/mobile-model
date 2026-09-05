@@ -45,15 +45,27 @@ object TestSetRunner {
         for (i in 0 until scam.length()) {
             val o = scam.getJSONObject(i)
             scamTotal++
-            val v = detector.check(Normaliser.normalise("VK-ALERTS", o.getString("text")))
-            if (v.isScam) scamCaught++ else missed.add(o.getString("id") + " " + o.getString("pattern"))
+            // Through GATE 0 first, exactly as a real message would be. A scam
+            // the scope filter drops never reaches the detector, so it must
+            // count as missed - otherwise the suite cannot see a filter that is
+            // too aggressive, which is the whole risk of having one.
+            val text = o.getString("text")
+            val inScope = ScopeFilter.decide("VK-ALERTS", text).examine
+            val v = if (inScope) detector.check(Normaliser.normalise("VK-ALERTS", text))
+                    else Verdict.clean()
+            if (v.isScam) scamCaught++
+            else missed.add(o.getString("id") + " " + o.getString("pattern") +
+                            if (!inScope) " [FILTERED OUT]" else "")
         }
 
         val genuine = root.getJSONArray("genuine")
         for (i in 0 until genuine.length()) {
             val o = genuine.getJSONObject(i)
             genuineTotal++
-            val v = detector.check(Normaliser.normalise("VM-SBIINB", o.getString("text")))
+            val text = o.getString("text")
+            val v = if (ScopeFilter.decide("VM-SBIINB", text).examine)
+                        detector.check(Normaliser.normalise("VM-SBIINB", text))
+                    else Verdict.clean()
             if (!v.isScam) genuinePassed++ else falseAlarms.add(o.getString("id") + " -> " + v.pattern)
         }
 
