@@ -3,6 +3,9 @@
 > (setup steps, copying files) are out of date: the app now builds from
 > `airgap-src/` directly via sourceSets, and nothing is copied anywhere.
 > The event plan, timeline and scoring sections below are still current.
+> **Ignore every `.litertlm` / per-chip model table below.** That route was
+> dropped on 5 Sept. We ship `gemma3-1b-int4.task` on the CPU, one file for
+> both phones.
 
 # Airgap — Team Handover
 

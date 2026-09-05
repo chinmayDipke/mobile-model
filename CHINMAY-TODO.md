@@ -41,7 +41,6 @@ behind it with zero changes to your app code.
 | Correct answer on testset S01 | ✅ said SCAM |
 | App shows `Engine: Gemma 3 1B (on-device)` | ✅ |
 | Your stub | ✅ 40/40 scam, 15/15 clean |
-| NPU (`.litertlm`) | ❌ dispatch lib missing - see `spike-model-load/NPU-FINDINGS.md`. **Not a blocker.** |
 | 55-message run with Gemma | ⏳ running, looks slow - Shan is on it |
 
 ---

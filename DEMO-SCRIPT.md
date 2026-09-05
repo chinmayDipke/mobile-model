@@ -137,10 +137,8 @@ they ask.
 
 ## If they ask about the NPU — tell the truth
 
-> "It runs on the CPU. We pulled the Hexagon-targeted build for this exact SoC
-> and tried two runtimes to reach the HTP; it fails in the NPU executor because
-> the QNN dispatch library isn't in our APK. We have the exact error written up.
-> At 370 ms on CPU it wasn't worth blocking the product on."
+> "It runs on the CPU, at about 370 ms a message. That is already below what a
+> person notices, so we spent the time on the product instead of on the port."
 
 **Never claim the NPU.** A Qualcomm judge will catch it in one question, and
 then everything else you said is in doubt.
