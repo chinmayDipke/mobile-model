@@ -31,6 +31,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         status = findViewById(R.id.statusText)
 
+        // Pick the real model if its file is on this phone, else stay on the stub.
+        // Off the main thread: loading Gemma takes ~1.5 s and would hang the UI.
+        Thread {
+            Airgap.initDetector(applicationContext)
+            runOnUiThread { refreshStatus() }
+        }.start()
+
         findViewById<Button>(R.id.smsPermButton).setOnClickListener { askSmsPermission() }
         findViewById<Button>(R.id.overlayPermButton).setOnClickListener { askOverlay() }
         findViewById<Button>(R.id.notifPermButton).setOnClickListener { askNotificationAccess() }
