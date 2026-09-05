@@ -28,18 +28,21 @@ class GemmaDetector(private val context: Context) : Detector {
     /**
      * Built once and reused - creating this per message would cost 1.5 s each time.
      *
-     * maxTokens is deliberately TINY. Generation time is dominated by how many
-     * tokens come out, not by the model size. Asking for a written reason took
-     * ~12 s per message; asking for one word takes ~0.4 s. The reason text comes
-     * from REASONS below instead - which is also better wording for the
-     * first-time and older users we built this for.
+     * CAREFUL: maxTokens is the total budget for INPUT + OUTPUT, not a cap on
+     * the answer. Setting it below the prompt length crashes the native engine
+     * ("input_size(201) was not less than maxTokens(8)"). 512 leaves plenty of
+     * room for our ~150 token prompt.
+     *
+     * Speed comes from the PROMPT, not from this number: the model stops after
+     * one word because that is all we ask for. Asking for a written reason
+     * instead cost ~12 s per message. The reason text comes from REASONS below.
      */
     private val llm: LlmInference by lazy {
         LlmInference.createFromOptions(
             context,
             LlmInference.LlmInferenceOptions.builder()
                 .setModelPath(MODEL_PATH)
-                .setMaxTokens(8)
+                .setMaxTokens(512)
                 .build()
         )
     }
@@ -63,22 +66,16 @@ class GemmaDetector(private val context: Context) : Detector {
      * single biggest lever on speed: a written reason cost ~12 s per message,
      * one word costs ~0.4 s.
      */
-    private fun buildPrompt(m: NormalisedMessage): String = """
-You are a fraud detector for Indian bank and payment SMS.
-
-Rules:
-- Real banks never ask you to approve a request or enter a UPI PIN to RECEIVE money.
-- Real banks do not send shortened or lookalike links to update KYC.
-- A personal 10-digit number offered as "customer care" is a scam. 1800 numbers are normal.
-- A plain transaction alert, OTP, balance or statement message is CLEAN.
-
-Answer with ONE word only: SCAM or CLEAN.
-
-Message: "${m.compact}"
-${if (m.urls.isNotEmpty()) "Links: ${m.urls.joinToString(", ")}" else ""}
-${if (m.mobileNumbers.isNotEmpty()) "Personal numbers in text: ${m.mobileNumbers.joinToString(", ")}" else ""}
-
-Answer:""".trim()
+    private fun buildPrompt(m: NormalisedMessage): String = buildString {
+        append("Is this Indian bank SMS a scam? Reply one word: SCAM or CLEAN.\n")
+        append("Scam signs: PIN or approval needed to RECEIVE money; KYC link; ")
+        append("scan QR to get cash; personal 10-digit \"customer care\" number.\n")
+        append("Clean: plain alert, OTP, balance, statement, 1800 number.\n")
+        append("SMS: ").append(m.compact).append('\n')
+        if (m.urls.isNotEmpty()) append("Link: ").append(m.urls.first()).append('\n')
+        if (m.mobileNumbers.isNotEmpty()) append("Personal number in text\n")
+        append("Answer:")
+    }
 
     /**
      * Written by us, not by the model. Three reasons:
