@@ -1,83 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  The full-screen interrupt. This is the screen a judge actually looks at, and
+  the screen a frightened person reads at the worst possible moment.
+
+  Design intent:
+   - Calm, not shouting. Red-alert styling makes people panic and tap anything
+     to make it go away. Amber on near-black reads as "the system is telling
+     you something", which is the tone that actually gets read.
+   - The REASON is the largest body text on the screen. Our users are
+     first-time and older users, and this same sentence is read aloud.
+   - The scam text is quoted with an accent bar and de-emphasised, so it is
+     clearly THEIR words, not ours.
+   - The trust block at the bottom is evidence, not decoration: which engine
+     decided, and that nothing left the phone.
+-->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0B0B0B"
+    android:background="#0B0B0D"
     android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="28dp">
+        android:paddingLeft="28dp"
+        android:paddingRight="28dp"
+        android:paddingTop="40dp"
+        android:paddingBottom="32dp">
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:letterSpacing="0.25"
-            android:text="AIRGAP"
-            android:textColor="#F0B31C"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <View
+                android:layout_width="18dp"
+                android:layout_height="3dp"
+                android:background="#F0B31C" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:letterSpacing="0.3"
+                android:text="AIRGAP"
+                android:textColor="#F0B31C"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="32dp"
+            android:contentDescription="Warning"
+            android:src="@drawable/ic_warning_shield" />
 
         <TextView
             android:id="@+id/patternLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="#F0B31C"
-            android:padding="16dp"
+            android:letterSpacing="-0.01"
+            android:lineSpacingMultiplier="1.1"
             android:text="SCAM BLOCKED"
-            android:textColor="#000000"
-            android:textSize="24sp"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="26dp"
-            android:letterSpacing="0.15"
-            android:text="WHY IT WAS FLAGGED"
-            android:textColor="#F0B31C"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+        <View
+            android:layout_width="44dp"
+            android:layout_height="3dp"
+            android:layout_marginTop="18dp"
+            android:background="#F0B31C" />
 
         <TextView
             android:id="@+id/reasonText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:lineSpacingMultiplier="1.3"
-            android:textColor="#FFFFFF"
-            android:textSize="19sp" />
+            android:layout_marginTop="18dp"
+            android:lineSpacingMultiplier="1.45"
+            android:textColor="#EDEDF0"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:letterSpacing="0.16"
+            android:text="THE MESSAGE"
+            android:textColor="#6E7078"
+            android:textSize="11sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/messageText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:background="#1A1A1A"
-            android:lineSpacingMultiplier="1.25"
-            android:padding="16dp"
-            android:textColor="#B9B9B9"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_quote"
+            android:lineSpacingMultiplier="1.35"
+            android:paddingLeft="20dp"
+            android:paddingTop="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="16dp"
+            android:textColor="#A7A9B2"
             android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/metaText"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textColor="#7A7A7A"
-            android:textSize="13sp" />
+            android:layout_marginTop="22dp"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/metaText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="1.3"
+                android:textColor="#8A8D96"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="No network was used."
+                android:textColor="#4FB477"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/closeButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="58dp"
             android:layout_marginTop="28dp"
-            android:backgroundTint="#F0B31C"
+            android:background="@drawable/btn_primary"
             android:text="Close this"
-            android:textColor="#000000"
+            android:textAllCaps="false"
+            android:textColor="#0B0B0D"
             android:textSize="17sp"
             android:textStyle="bold" />
 
@@ -86,9 +152,10 @@
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="6dp"
             android:text="I understand the risk, continue"
-            android:textColor="#7A7A7A"
+            android:textAllCaps="false"
+            android:textColor="#6E7078"
             android:textSize="14sp" />
     </LinearLayout>
 </ScrollView>

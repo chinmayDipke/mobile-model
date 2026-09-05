@@ -64,6 +64,9 @@ class MainActivity : AppCompatActivity() {
                     "FALSE ALARM - it blocked a genuine bank SMS. Needs tuning."
             })
         }
+        findViewById<Button>(R.id.scanQrButton).setOnClickListener {
+            startActivity(Intent(this, QrScanActivity::class.java))
+        }
         findViewById<Button>(R.id.runTestsButton).setOnClickListener { runTests() }
 
         refreshStatus()

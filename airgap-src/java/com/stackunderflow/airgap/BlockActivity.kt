@@ -64,6 +64,7 @@ class BlockActivity : AppCompatActivity() {
         "collect_refund" -> "REFUND THAT TAKES MONEY"
         "fake_care" -> "FAKE CUSTOMER CARE"
         "wrong_transfer" -> "WRONG TRANSFER TRICK"
+        "qr_send_only" -> "THIS QR ONLY SENDS MONEY"
         else -> "SCAM BLOCKED"
     }
 

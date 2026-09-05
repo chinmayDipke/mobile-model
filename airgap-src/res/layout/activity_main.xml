@@ -1,97 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Control panel. Not the product - this is where we grant permissions, prove
+  the detector works, and rehearse. Kept in the same dark palette as the block
+  screen so the two do not look like two different apps on stage.
+
+  The status box stays monospace on purpose: it is a readout, and a judge
+  reading "Engine: Rules + Gemma 3 1B (on-device)" off the screen is worth more
+  than us claiming it.
+-->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAFAF7"
+    android:background="#0B0B0D"
     android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingTop="36dp"
+        android:paddingBottom="32dp">
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="AIRGAP"
-            android:textColor="#000000"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="18dp"
+                android:layout_height="3dp"
+                android:background="#F0B31C" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:letterSpacing="0.16"
+                android:text="AIRGAP"
+                android:textColor="#FFFFFF"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Catches UPI scams on this phone. No server."
-            android:textColor="#5A5A5A"
+            android:layout_marginTop="8dp"
+            android:lineSpacingMultiplier="1.3"
+            android:text="Catches UPI scams on this phone. No server, no network."
+            android:textColor="#8A8D96"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/statusText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="#FFFFFF"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/bg_status"
             android:fontFamily="monospace"
-            android:lineSpacingMultiplier="1.35"
-            android:padding="16dp"
-            android:textColor="#1A1A1A"
+            android:lineSpacingMultiplier="1.45"
+            android:padding="18dp"
+            android:textColor="#D6D8DE"
             android:textSize="13sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="28dp"
+            android:letterSpacing="0.16"
             android:text="PERMISSIONS"
-            android:textColor="#C8920A"
-            android:textSize="12sp"
+            android:textColor="#6E7078"
+            android:textSize="11sp"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/smsPermButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Grant SMS access" />
+            android:layout_height="52dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/btn_secondary"
+            android:text="Grant SMS access"
+            android:textAllCaps="false"
+            android:textColor="#EDEDF0"
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/overlayPermButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Allow draw over other apps" />
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/btn_secondary"
+            android:text="Allow draw over other apps"
+            android:textAllCaps="false"
+            android:textColor="#EDEDF0"
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/notifPermButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Allow notification access" />
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/btn_secondary"
+            android:text="Allow notification access"
+            android:textAllCaps="false"
+            android:textColor="#EDEDF0"
+            android:textSize="15sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="30dp"
+            android:letterSpacing="0.16"
             android:text="DEMO"
-            android:textColor="#C8920A"
-            android:textSize="12sp"
+            android:textColor="#6E7078"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/scanQrButton"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/btn_primary"
+            android:text="Scan a QR code"
+            android:textAllCaps="false"
+            android:textColor="#0B0B0D"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/demoScamButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#F0B31C"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/btn_secondary"
             android:text="Fire a scam message"
-            android:textColor="#000000" />
+            android:textAllCaps="false"
+            android:textColor="#EDEDF0"
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/demoCleanButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Fire a genuine bank message" />
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/btn_secondary"
+            android:text="Fire a genuine bank message"
+            android:textAllCaps="false"
+            android:textColor="#EDEDF0"
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/runTestsButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Run all 55 test messages" />
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/btn_secondary"
+            android:text="Run all 55 test messages"
+            android:textAllCaps="false"
+            android:textColor="#EDEDF0"
+            android:textSize="15sp" />
     </LinearLayout>
 </ScrollView>

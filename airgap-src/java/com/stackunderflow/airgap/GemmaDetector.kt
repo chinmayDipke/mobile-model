@@ -119,6 +119,7 @@ class GemmaDetector(private val context: Context) : Detector {
         "collect_refund" to "This is a request for YOUR money, not a refund. Approving it will debit your account.",
         "fake_care" to "This is a personal mobile number, not a bank helpline. Real banks use 1800 numbers.",
         "wrong_transfer" to "The classic wrong transfer trick. No money came in. Do not send anything back.",
+        "qr_send_only" to "Scanning this code can only SEND your money, never receive it.",
     )
 
     private fun parse(answer: String, m: NormalisedMessage): Verdict {
