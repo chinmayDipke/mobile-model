@@ -70,7 +70,7 @@ class BlockActivity : AppCompatActivity() {
     private fun speak(text: String) {
         tts = TextToSpeech(this) { status ->
             if (status == TextToSpeech.SUCCESS) {
-                tts?.language = Locale("en", "IN")
+                tts?.language = Locale.forLanguageTag("en-IN")
                 tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, "airgap-warning")
             }
         }
