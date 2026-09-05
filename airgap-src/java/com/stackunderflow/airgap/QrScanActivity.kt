@@ -116,6 +116,8 @@ class QrScanActivity : AppCompatActivity() {
             return
         }
 
+        History.record(this, verdict, raw.take(160), "qr")
+
         startActivity(Intent(this, BlockActivity::class.java).apply {
             putExtra(BlockActivity.EXTRA_PATTERN, verdict.pattern)
             putExtra(BlockActivity.EXTRA_REASON, verdict.reason)
