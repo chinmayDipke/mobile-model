@@ -2,6 +2,7 @@ package com.stackunderflow.airgap
 
 import android.content.Context
 import com.google.mediapipe.tasks.genai.llminference.LlmInference
+import com.google.mediapipe.tasks.genai.llminference.LlmInferenceSession
 import java.io.File
 
 /**
@@ -50,9 +51,36 @@ class GemmaDetector(private val context: Context) : Detector {
     /** Warm the model up at app start so the first real SMS is not slow. */
     fun preload() { llm }
 
+    /**
+     * GREEDY decoding. This matters more than anything else in this file.
+     *
+     * The default session samples with topK=40, temperature=0.8 - fine for
+     * chat, wrong for a classifier. Measured with the defaults: 8 of our 15
+     * genuine bank SMS were flagged as scams, and the same message could get
+     * a different answer on a re-run. topK=1 / temperature=0 makes it pick the
+     * single most likely token, so it is deterministic - which also means the
+     * demo behaves identically every time we run it in front of judges.
+     *
+     * A fresh session per message is deliberate too: reusing one accumulates
+     * context, so message 30 would be judged with 29 earlier messages in view.
+     */
+    private fun ask(prompt: String): String {
+        val session = LlmInferenceSession.createFromOptions(
+            llm,
+            LlmInferenceSession.LlmInferenceSessionOptions.builder()
+                .setTopK(1)
+                .setTemperature(0.0f)
+                .build()
+        )
+        return session.use { s ->
+            s.addQueryChunk(prompt)
+            s.generateResponse().trim()
+        }
+    }
+
     override fun check(message: NormalisedMessage): Verdict {
         val answer = try {
-            llm.generateResponse(buildPrompt(message)).trim()
+            ask(buildPrompt(message))
         } catch (t: Throwable) {
             // Never let the detector crash the app. Fail OPEN (treat as clean)
             // rather than blocking a genuine message the user needs.
@@ -67,13 +95,26 @@ class GemmaDetector(private val context: Context) : Detector {
      * one word costs ~0.4 s.
      */
     private fun buildPrompt(m: NormalisedMessage): String = buildString {
-        append("Is this Indian bank SMS a scam? Reply one word: SCAM or CLEAN.\n")
-        append("Scam signs: PIN or approval needed to RECEIVE money; KYC link; ")
-        append("scan QR to get cash; personal 10-digit \"customer care\" number.\n")
-        append("Clean: plain alert, OTP, balance, statement, 1800 number.\n")
+        append("Classify Indian bank SMS as SCAM or CLEAN.\n\n")
+        append("SCAM = it wants an ACTION from you: enter a PIN or approve a request ")
+        append("to RECEIVE money, open a link to fix KYC, scan a QR to get cash, ")
+        append("call a personal 10-digit number, or return money \"sent by mistake\".\n")
+        append("CLEAN = it only TELLS you something: a debit or credit alert, an OTP, ")
+        append("a balance, a bill due, an EMI, a statement, an FD maturing. ")
+        append("These often mention amounts, account numbers and 1800 numbers. ")
+        append("A message that only informs you is CLEAN even if it mentions money.\n\n")
+        // Few-shot. A 1B model needs to be shown, not just told.
+        append("SMS: Rs.199 debited from HDFC Card xx7723 at NETFLIX. Avl limit Rs.48,801.\n")
+        append("Answer: CLEAN\n\n")
+        append("SMS: Your KYC has EXPIRED. Account blocked in 24hrs. Update: sbi-kyc-verify.in\n")
+        append("Answer: SCAM\n\n")
+        append("SMS: INR 12,000 credited to A/c XX8832 via NEFT from RAHUL SHARMA.\n")
+        append("Answer: CLEAN\n\n")
+        append("SMS: You won Rs.5,000 cashback. Scan the QR to receive the amount.\n")
+        append("Answer: SCAM\n\n")
         append("SMS: ").append(m.compact).append('\n')
-        if (m.urls.isNotEmpty()) append("Link: ").append(m.urls.first()).append('\n')
-        if (m.mobileNumbers.isNotEmpty()) append("Personal number in text\n")
+        if (m.urls.isNotEmpty()) append("(contains link ").append(m.urls.first()).append(")\n")
+        if (m.mobileNumbers.isNotEmpty()) append("(contains a personal 10-digit number)\n")
         append("Answer:")
     }
 
