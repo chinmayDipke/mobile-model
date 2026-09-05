@@ -11,7 +11,7 @@ import java.io.File
  *   cold load 1579 ms, inference 370 ms, correct SCAM verdict on testset S01.
  *
  * Drop-in replacement for StubDetector - same Detector interface, so nothing
- * else in the app changes. See spike-model-load/RESULTS.md.
+ * else in the app changes.
  */
 class GemmaDetector(private val context: Context) : Detector {
 

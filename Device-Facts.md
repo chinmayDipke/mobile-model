@@ -9,21 +9,11 @@
 | Android | 16 (SDK 36) | **16 (SDK 36)** ✅ |
 | RAM | 15.6 GB | **15.6 GB** ✅ |
 
-**So both phones use the same file:** `Gemma3-1B-IT_q4_ekv1280_sm8850.litertlm`.
-No per-phone branching. Section 1's "check it" column is resolved.
+**So both phones run the same build.** No per-phone branching.
+Section 1's "check it" column is resolved.
 
-## NPU evidence — for the technical-depth 15%
-
-Read off the device, not guessed:
-
-- `/vendor/lib/rfsa/adsp/libQnnHtpV81.so` → **Hexagon Tensor Processor v81**
-- platform feature `com.google.android.feature.AICORE_QC_SM8850`
-- `ro.soc.manufacturer=QTI`, `ro.board.platform=canoe`, abi `arm64-v8a`
-
-**Say to judges: "Hexagon Tensor Processor v81 on SM8850."** Not "the NPU".
-The `sm8850.litertlm` build is compiled to target that specific HTP.
-
-Ask Kartikey Rawat (Qualcomm) how to *prove* it dispatched to HTP and not CPU.
+We ship **`gemma3-1b-int4.task` on the CPU**. The chip-specific `.litertlm`
+route was tried and dropped on 5 Sept - see the note at the end of this file.
 
 ## Storage — not a constraint
 
@@ -43,3 +33,15 @@ Shrink only if it fails to load.
 
 **MediaPipe: use `0.10.29`, not `0.10.27`.** Handover section 5 says 0.10.27;
 0.10.29 is newer and is already resolved and cached locally.
+
+## The NPU route: tried, dropped
+
+We spent part of 5 Sept trying to reach the Hexagon NPU with a
+chip-specific `.litertlm` build, through both MediaPipe and LiteRT-LM.
+Neither reached it, and we removed that code rather than carry a half-
+finished port into judging.
+
+**370 ms per verdict on the CPU is already below what a person notices**,
+so the port bought us nothing a judge could see. Do not restart it.
+
+If asked: say it runs on the CPU. Never claim the NPU.

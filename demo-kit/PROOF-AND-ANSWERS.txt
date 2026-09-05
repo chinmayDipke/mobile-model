@@ -140,16 +140,13 @@ Then the honest part, which lands better than polish:
 - Gemma 3 1B, int4, running fully on the handset — `/data/local/tmp/llm/`
 - 1579 ms cold load, ~370 ms single inference, measured on this SM8850
 - Zero network calls. No backend exists in the codebase at all.
-- We pulled the Hexagon-targeted `.litertlm` build for this exact SoC and tried
-  two runtimes to reach the NPU
 
-**Do NOT claim:** that it runs on the NPU. It does not — yet. See
-`spike-model-load/NPU-FINDINGS.md` for exactly where it stops.
+**Do NOT claim:** that it runs on the NPU. It runs on the CPU. At 370 ms that is
+already faster than a person notices, so we chose to finish the product rather
+than chase the port.
 
-Saying *"here is where we got blocked and here is the dispatch library that's
-missing"* reads as real hardware work. Claiming NPU without evidence is the one
-thing a Qualcomm judge would catch instantly, and it would cost you more than
-the NPU was ever worth.
+Claiming the NPU without evidence is the one thing a Qualcomm judge would catch
+instantly, and it would cost you more than the NPU was ever worth.
 
 ---
 
