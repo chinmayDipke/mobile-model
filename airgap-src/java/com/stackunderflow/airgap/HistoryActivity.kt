@@ -1,6 +1,5 @@
 package com.stackunderflow.airgap
 
-import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.util.TypedValue
@@ -10,6 +9,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -78,17 +78,17 @@ class HistoryActivity : AppCompatActivity() {
         box.removeAllViews()
 
         if (s.arrived == 0) {
-            box.addView(line("No messages seen yet.", 14f, "#6E7078"))
+            box.addView(line("No messages seen yet.", 14f, R.color.text_tertiary))
             return
         }
 
-        box.addView(statRow(s.arrived, "messages arrived", "#D6D8DE", ""))
-        box.addView(statRow(s.examined, "examined", "#D6D8DE", "mentioned money or asked you to act"))
-        box.addView(statRow(s.ignored, "ignored", "#4FB477", "checked for a money signal, then discarded"))
-        box.addView(statRow(s.blocked, "blocked", "#F0B31C", ""))
+        box.addView(statRow(s.arrived, "messages arrived", R.color.text_secondary, ""))
+        box.addView(statRow(s.examined, "examined", R.color.text_secondary, "mentioned money or asked you to act"))
+        box.addView(statRow(s.ignored, "ignored", R.color.ok, "checked for a money signal, then discarded"))
+        box.addView(statRow(s.blocked, "blocked", R.color.accent, ""))
     }
 
-    private fun statRow(n: Int, label: String, colour: String, note: String): LinearLayout {
+    private fun statRow(n: Int, label: String, colour: Int, note: String): LinearLayout {
         val row = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             layoutParams = LinearLayout.LayoutParams(
@@ -100,7 +100,7 @@ class HistoryActivity : AppCompatActivity() {
         row.addView(TextView(this).apply {
             text = n.toString()
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
-            setTextColor(Color.parseColor(colour))
+            setTextColor(ContextCompat.getColor(this@HistoryActivity, colour))
             setTypeface(android.graphics.Typeface.MONOSPACE, Typeface.BOLD)
             gravity = Gravity.END
             width = dp(56)
@@ -114,7 +114,7 @@ class HistoryActivity : AppCompatActivity() {
             ).apply { marginStart = dp(14) }
         }
         text.addView(line(label, 15f, colour))
-        if (note.isNotBlank()) text.addView(line(note, 12f, "#5F626B", topMargin = dp(1)))
+        if (note.isNotBlank()) text.addView(line(note, 12f, R.color.text_tertiary, topMargin = dp(1)))
         row.addView(text)
         return row
     }
@@ -130,25 +130,25 @@ class HistoryActivity : AppCompatActivity() {
             ).apply { bottomMargin = dp(10) }
         }
 
-        card.addView(line(prettyPattern(e.pattern), 15f, "#F0B31C", bold = true))
-        card.addView(line(e.reason, 14f, "#D6D8DE", topMargin = dp(6)))
-        card.addView(line("“" + e.message + "”", 13f, "#7E818A", topMargin = dp(10)))
+        card.addView(line(prettyPattern(e.pattern), 15f, R.color.accent, bold = true))
+        card.addView(line(e.reason, 14f, R.color.text_secondary, topMargin = dp(6)))
+        card.addView(line("“" + e.message + "”", 13f, R.color.text_tertiary, topMargin = dp(10)))
         card.addView(
             line(
                 time.format(Date(e.at)) + "  ·  " + prettySource(e.source) + "  ·  " + e.engine,
-                12f, "#5F626B", topMargin = dp(10)
+                12f, R.color.text_tertiary, topMargin = dp(10)
             )
         )
         return card
     }
 
     private fun line(
-        text: String, size: Float, colour: String,
+        text: String, size: Float, colour: Int,
         bold: Boolean = false, topMargin: Int = 0,
     ) = TextView(this).apply {
         this.text = text
         setTextSize(TypedValue.COMPLEX_UNIT_SP, size)
-        setTextColor(Color.parseColor(colour))
+        setTextColor(ContextCompat.getColor(this@HistoryActivity, colour))
         if (bold) setTypeface(typeface, Typeface.BOLD)
         setLineSpacing(0f, 1.3f)
         gravity = Gravity.START

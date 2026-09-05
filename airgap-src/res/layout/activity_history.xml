@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0B0B0D"
+    android:background="@color/bg"
     android:fillViewport="true">
 
     <LinearLayout
@@ -23,7 +23,7 @@
             <View
                 android:layout_width="18dp"
                 android:layout_height="3dp"
-                android:background="#F0B31C" />
+                android:background="@color/accent" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -31,7 +31,7 @@
                 android:layout_marginStart="10dp"
                 android:letterSpacing="0.3"
                 android:text="AIRGAP"
-                android:textColor="#F0B31C"
+                android:textColor="@color/accent"
                 android:textSize="13sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="26dp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/text_primary"
             android:textSize="30sp"
             android:textStyle="bold" />
 
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:lineSpacingMultiplier="1.35"
-            android:textColor="#4FB477"
+            android:textColor="@color/ok"
             android:textSize="14sp" />
 
         <TextView
@@ -60,7 +60,7 @@
             android:layout_marginTop="30dp"
             android:letterSpacing="0.16"
             android:text="WHAT AIRGAP ACTUALLY READ"
-            android:textColor="#6E7078"
+            android:textColor="@color/text_tertiary"
             android:textSize="11sp"
             android:textStyle="bold" />
 
@@ -79,7 +79,7 @@
             android:layout_marginTop="10dp"
             android:lineSpacingMultiplier="1.3"
             android:text="Something has to look in order to decide. For an ignored message that is a 20-line check that asks one question and keeps nothing: no model, no storage, no log, no network. Only the count survives."
-            android:textColor="#5F626B"
+            android:textColor="@color/text_tertiary"
             android:textSize="12sp" />
 
         <TextView
@@ -88,7 +88,7 @@
             android:layout_marginTop="30dp"
             android:letterSpacing="0.16"
             android:text="BLOCKED"
-            android:textColor="#6E7078"
+            android:textColor="@color/text_tertiary"
             android:textSize="11sp"
             android:textStyle="bold" />
 
@@ -107,7 +107,7 @@
             android:layout_marginTop="16dp"
             android:text="Clear history"
             android:textAllCaps="false"
-            android:textColor="#6E7078"
+            android:textColor="@color/text_tertiary"
             android:textSize="14sp" />
     </LinearLayout>
 </ScrollView>

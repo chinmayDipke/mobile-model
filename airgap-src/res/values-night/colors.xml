@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- DARK. Same names, same meanings. -->
+<resources>
+    <color name="bg">#0E0E11</color>
+    <color name="surface">#16171B</color>
+    <color name="surface_alt">#1B1D22</color>
+    <color name="hairline">#26282E</color>
+
+    <color name="text_primary">#E6E7EA</color>
+    <color name="text_secondary">#9A9CA4</color>
+    <color name="text_tertiary">#71747C</color>
+
+    <color name="accent">#F0B31C</color>
+    <color name="accent_fill">#F0B31C</color>
+    <color name="on_accent_fill">#0B0B0D</color>
+
+    <color name="ok">#4FB477</color>
+    <color name="bad">#E06C4F</color>
+
+    <color name="ripple">#1FFFFFFF</color>
+</resources>

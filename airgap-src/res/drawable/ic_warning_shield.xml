@@ -2,10 +2,10 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="56dp" android:height="56dp"
     android:viewportWidth="48" android:viewportHeight="48">
-    <path android:fillColor="#F0B31C"
+    <path android:fillColor="@color/accent_fill"
         android:pathData="M24,3 L41,10 L41,24 C41,34 33.5,41.5 24,45 C14.5,41.5 7,34 7,24 L7,10 Z"/>
-    <path android:fillColor="#0B0B0D"
+    <path android:fillColor="@color/on_accent_fill"
         android:pathData="M22,14 h4 v14 h-4 z"/>
-    <path android:fillColor="#0B0B0D"
+    <path android:fillColor="@color/on_accent_fill"
         android:pathData="M22,32 h4 v4 h-4 z"/>
 </vector>

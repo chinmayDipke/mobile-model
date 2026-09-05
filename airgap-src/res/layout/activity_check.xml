@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0B0B0D"
+    android:background="@color/bg"
     android:fillViewport="true">
 
     <LinearLayout
@@ -23,7 +23,7 @@
             <View
                 android:layout_width="18dp"
                 android:layout_height="3dp"
-                android:background="#F0B31C" />
+                android:background="@color/accent" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -31,7 +31,7 @@
                 android:layout_marginStart="10dp"
                 android:letterSpacing="0.3"
                 android:text="AIRGAP"
-                android:textColor="#F0B31C"
+                android:textColor="@color/accent"
                 android:textSize="13sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="Checking"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/text_primary"
             android:textSize="28sp"
             android:textStyle="bold" />
 
@@ -50,7 +50,7 @@
             android:layout_width="44dp"
             android:layout_height="3dp"
             android:layout_marginTop="16dp"
-            android:background="#4FB477" />
+            android:background="@color/ok" />
 
         <TextView
             android:id="@+id/checkStatus"
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:lineSpacingMultiplier="1.45"
-            android:textColor="#EDEDF0"
+            android:textColor="@color/text_primary"
             android:textSize="18sp" />
 
         <TextView
@@ -72,7 +72,7 @@
             android:paddingTop="16dp"
             android:paddingRight="16dp"
             android:paddingBottom="16dp"
-            android:textColor="#A7A9B2"
+            android:textColor="@color/text_secondary"
             android:textSize="15sp" />
 
         <TextView
@@ -80,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            android:textColor="#6E7078"
+            android:textColor="@color/text_tertiary"
             android:textSize="13sp" />
     </LinearLayout>
 </ScrollView>

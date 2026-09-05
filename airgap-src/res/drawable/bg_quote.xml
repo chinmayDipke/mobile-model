@@ -2,14 +2,14 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#15161A" />
+            <solid android:color="@color/surface" />
             <corners android:radius="12dp" />
         </shape>
     </item>
     <!-- accent bar down the left, so a quoted scam reads as quoted -->
     <item android:width="4dp" android:gravity="left">
         <shape android:shape="rectangle">
-            <solid android:color="#F0B31C" />
+            <solid android:color="@color/accent" />
         </shape>
     </item>
 </layer-list>
