@@ -79,7 +79,7 @@ class HybridDetector(
         return listOf(
             "scan", "approve", "accept", "authorize", "authorise",
             "enter pin", "upi pin", "click", "update kyc", "verify",
-            "send back", "return it", "claim", "collect request",
+            "send back", "return it", "wapas", "claim", "collect request",
             "payment request", "download", "install",
         ).any { t.contains(it) }
     }

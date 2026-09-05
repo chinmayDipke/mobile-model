@@ -151,7 +151,7 @@ class GemmaDetector(private val context: Context) : Detector {
             t.contains("qr") || t.contains("scan") -> "qr_cashback"
             t.contains("collect request") || t.contains("approve") || t.contains("upi pin") -> "collect_refund"
             m.mobileNumbers.isNotEmpty() && (t.contains("call") || t.contains("customer care") || t.contains("helpline")) -> "fake_care"
-            t.contains("by mistake") || t.contains("wrong") -> "wrong_transfer"
+            t.contains("by mistake") || t.contains("wrong") || t.contains("galti") -> "wrong_transfer"
             else -> "kyc_link"
         }
     }

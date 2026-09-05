@@ -69,9 +69,9 @@ class StubDetector : Detector {
         }
 
         // 5. "Sent you money by mistake, please send it back."
-        if (t.hasAny("by mistake", "mistakenly", "wrongly", "accidentally",
+        if (t.hasAny("by mistake", "mistakenly", "wrongly", "galti", "accidentally",
                 "wrong number", "wrong account", "wrong upi", "wrong transfer") &&
-            t.hasAny("return", "send back", "refund", "give back",
+            t.hasAny("return", "send back", "refund", "wapas", "give back",
                 "transfer back", "cooperate")
         ) {
             return Verdict(true, "wrong_transfer", 0.89f,
