@@ -1,0 +1,96 @@
+AIRGAP - DEMO MESSAGES
+======================
+Keep this open on CHINMAY'S phone. Copy, paste, send. Never type on stage.
+
+Verified on device: every one of these is caught.
+
+
+=========================================
+THE MAIN RUN - send these two, in order
+=========================================
+
+--- 1. THE SCAM (block screen + voice) ---
+
+You have won Rs5000 cashback. Scan the QR to receive the amount in your account.
+
+
+--- 2. THE CLEAN ONE (nothing must happen) ---
+
+Rs.199 debited from HDFC Bank Card xx7723 at NETFLIX on 03-09-26. Avl limit Rs.48,801.
+
+
+>> Send 2 into the SAME chat as 1. That is the harder test and the one
+>> that wins: it proves we do not just flag everything.
+
+
+=========================================
+IF A JUDGE ASKS FOR ANOTHER - one per type
+=========================================
+
+--- Fake KYC ---
+Dear Customer, your account KYC has EXPIRED. Account will be blocked within 24hrs. Update now: sbi-kyc-verify.in/update
+
+--- Collect request dressed as a refund ---
+You have a COLLECT REQUEST of Rs.4999 from MERCHANT REFUND. Approve to receive your refund amount.
+
+--- Fake customer care ---
+Your recent transaction of Rs.24999 failed. For instant refund call our customer care 9835442621 immediately.
+
+--- Wrong transfer ---
+Sorry bhai, I sent Rs.9500 to your account by mistake. Please return it to my UPI id, family emergency.
+
+--- Hinglish version, if they ask about Indian languages ---
+Bhaiya galti se aapko paise chale gaye 11000. Please wapas bhej do, mera number 8823551117.
+
+
+=========================================
+NOVEL SCAMS - if a judge asks "what about
+a scam you did not write a rule for?"
+=========================================
+These have NO rule. The on-device model catches them. That is the point.
+
+--- Digital arrest ---
+Cyber Cell notice. A money laundering case is registered against your Aadhaar. Join the video call now to verify your identity, or a warrant will be issued.
+
+--- Courier redelivery ---
+Your parcel could not be delivered due to an incomplete address. Update your address and pay Rs.25 redelivery: parcel-in.info/redeliver
+
+--- Fake job payout ---
+Your part-time task payment of Rs.8400 is ready. Open the app, tap Withdraw and enter your UPI PIN to move it to your bank.
+
+--- FASTag ---
+Your FASTag balance is low and will be blacklisted at toll plazas. Recharge now using this link: fastag-recharge.site/pay
+
+
+=========================================
+MORE CLEAN ONES - if they try to break it
+=========================================
+A judge WILL try to make it cry wolf. Offer these before they ask.
+All of them deliberately contain scam-sounding words. All pass.
+
+OTP is 449213 for txn of INR 1,299 at AMAZON. Valid 10 min. Do not share with anyone. -ICICI Bank
+
+INR 12,000 credited to A/c XX8832 via NEFT from RAHUL SHARMA on 04-09-26. -SBI
+
+Your credit card bill of Rs.14,320 is due on 18-09-26. Pay via the HDFC app to avoid late fee.
+
+Rs.1,180.00 credited to A/c XX4471 by DBT LPG SUBSIDY. Avl Bal Rs.16,204.55 -SBI
+
+Rs.2,500.00 debited from A/c XX4471 to VPA grocerystore@okaxis. Not you? Call 18004253800.
+
+
+=========================================
+NOTES
+=========================================
+
+- WhatsApp is the delivery path. The carrier blocks phishing-shaped SMS
+  from personal numbers - our KYC test message never arrived. Do not
+  rely on SMS on stage.
+
+- Do NOT have the chat open on the loaner. No notification, no detection.
+
+- The QR beat is the aeroplane-mode beat. A message needs a radio; a QR
+  is physically in front of the camera, so only that part is genuinely
+  offline. Do not pretend otherwise.
+
+- Loaner volume UP. The warning is spoken.
