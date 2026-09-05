@@ -26,8 +26,22 @@ object Normaliser {
     // also matches masked numbers like 9835xxxx21, which is how our test set stores them
     private val MOBILE = Regex("""\b(?:\+?91[-\s]?)?(?:[6-9][0-9]{9}|[6-9][0-9]{3}[xX*]{2,6}[0-9]{2,4})\b""")
 
+    /**
+     * Scammers write "sbi-kyc-verify [dot] in slash update" so a filter looking
+     * for a URL sees plain prose. Undo that before anything reads the text -
+     * the stress run found one of these getting through untouched.
+     */
+    private val DEOBFUSCATE = listOf(
+        Regex("""\s*[\[(]\s*dot\s*[\])]\s*""", RegexOption.IGNORE_CASE) to ".",
+        Regex("""\s+dot\s+""", RegexOption.IGNORE_CASE) to ".",
+        Regex("""\s*[\[(]\s*at\s*[\])]\s*""", RegexOption.IGNORE_CASE) to "@",
+        Regex("""\s+slash\s+""", RegexOption.IGNORE_CASE) to "/",
+        Regex("""h\s*x\s*x\s*p""", RegexOption.IGNORE_CASE) to "http",
+    )
+
     fun normalise(sender: String, body: String): NormalisedMessage {
-        val text = body.replace(Regex("""\s+"""), " ").trim()
+        var text = body.replace(Regex("""\s+"""), " ").trim()
+        DEOBFUSCATE.forEach { (re, to) -> text = re.replace(text, to) }
 
         val tollFree = TOLL_FREE.findAll(text).map { it.value }.distinct().toList()
         // remove toll-free hits before hunting for personal mobiles so they do not double count

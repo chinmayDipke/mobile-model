@@ -1,0 +1,319 @@
+{
+  "note": "Adversarial suite. Reworded known patterns, novel shapes, keyword-evasion attempts, hard negatives (real bank SMS full of scam vocabulary), personal chatter, and junk input.",
+  "scam": [
+    {
+      "id": "A_kyc_reword",
+      "pattern": "A_kyc_reword",
+      "label": "scam",
+      "text": "Your PAN is not seeded with your account. Netbanking stops tonight. Re-verify at hdfc-secure.co.in/pan"
+    },
+    {
+      "id": "A_kyc_hindi",
+      "pattern": "A_kyc_hindi",
+      "label": "scam",
+      "text": "Aapka KYC expire ho gaya hai. Account band ho jayega. Yahan update karein: sbi-update.in/kyc"
+    },
+    {
+      "id": "A_qr_reword",
+      "pattern": "A_qr_reword",
+      "label": "scam",
+      "text": "Prize confirmed. Open any UPI app, scan the code we sent, enter PIN and the amount is yours."
+    },
+    {
+      "id": "A_qr_short",
+      "pattern": "A_qr_short",
+      "label": "scam",
+      "text": "Scan QR to get your Rs2000 refund."
+    },
+    {
+      "id": "A_collect_re",
+      "pattern": "A_collect_re",
+      "label": "scam",
+      "text": "A payment request for Rs.3,200 is waiting. Accept it and the settlement will reflect in your account."
+    },
+    {
+      "id": "A_collect_pin",
+      "pattern": "A_collect_pin",
+      "label": "scam",
+      "text": "To receive your insurance settlement of Rs.45000 please authorise the request and enter UPI PIN."
+    },
+    {
+      "id": "A_care_reword",
+      "pattern": "A_care_reword",
+      "label": "scam",
+      "text": "Txn stuck? Our executive will help. WhatsApp 9812345678 now for immediate reversal."
+    },
+    {
+      "id": "A_care_short",
+      "pattern": "A_care_short",
+      "label": "scam",
+      "text": "Refund failed. Call 9922334455 for help."
+    },
+    {
+      "id": "A_wrong_re",
+      "pattern": "A_wrong_re",
+      "label": "scam",
+      "text": "Bhai maine 12000 aapke number pe bhej diye galti se, please wapas kar do urgent hai"
+    },
+    {
+      "id": "A_wrong_eng",
+      "pattern": "A_wrong_eng",
+      "label": "scam",
+      "text": "Apologies, transferred to the wrong UPI id. Rs.6,000. Kindly send it back, medical emergency."
+    },
+    {
+      "id": "B_electricity",
+      "pattern": "B_electricity",
+      "label": "scam",
+      "text": "Dear consumer your power will be disconnected tonight 9:30pm, bill not updated. Pay now: mseb-pay.in"
+    },
+    {
+      "id": "B_courier",
+      "pattern": "B_courier",
+      "label": "scam",
+      "text": "Parcel held, address incomplete. Pay Rs.25 redelivery: parcel-in.info/redeliver"
+    },
+    {
+      "id": "B_sim",
+      "pattern": "B_sim",
+      "label": "scam",
+      "text": "Your SIM will stop in 24 hours, 4G upgrade pending. Install the upgrade app from simupdate-in.top"
+    },
+    {
+      "id": "B_arrest",
+      "pattern": "B_arrest",
+      "label": "scam",
+      "text": "Cyber Cell notice. Money laundering case registered against your Aadhaar. Join the video call now to verify your identity or a warrant will be issued."
+    },
+    {
+      "id": "B_loanfee",
+      "pattern": "B_loanfee",
+      "label": "scam",
+      "text": "Instant loan of Rs.2,00,000 approved. Pay one-time processing charge of Rs.1,850 to release it."
+    },
+    {
+      "id": "B_lic",
+      "pattern": "B_lic",
+      "label": "scam",
+      "text": "Your LIC policy lapses today. Renew at licrenew-online.xyz to keep your cover."
+    },
+    {
+      "id": "B_fastag",
+      "pattern": "B_fastag",
+      "label": "scam",
+      "text": "FASTag balance low, will be blacklisted at toll plazas. Recharge: fastag-recharge.site/pay"
+    },
+    {
+      "id": "B_customs",
+      "pattern": "B_customs",
+      "label": "scam",
+      "text": "A gift parcel from abroad is held at customs. Pay Rs.3,200 clearance to release it. Reply YES."
+    },
+    {
+      "id": "B_apk",
+      "pattern": "B_apk",
+      "label": "scam",
+      "text": "Your banking app is outdated and transactions will fail. Install the updated version from this link."
+    },
+    {
+      "id": "B_job",
+      "pattern": "B_job",
+      "label": "scam",
+      "text": "Your part-time task payment of Rs.8,400 is ready. Open the app, tap Withdraw and enter your UPI PIN."
+    },
+    {
+      "id": "F_spaced",
+      "pattern": "F_spaced",
+      "label": "scam",
+      "text": "Y o u r K Y C h a s e x p i r e d. Update: sbi-kyc.in/now"
+    },
+    {
+      "id": "F_nolink_kyc",
+      "pattern": "F_nolink_kyc",
+      "label": "scam",
+      "text": "Your KYC verification is pending. Share the OTP you just received with our officer to complete it."
+    },
+    {
+      "id": "F_obfuscated",
+      "pattern": "F_obfuscated",
+      "label": "scam",
+      "text": "Update details at sbi-kyc-verify [dot] in slash update to avoid account freeze"
+    },
+    {
+      "id": "F_emoji",
+      "pattern": "F_emoji",
+      "label": "scam",
+      "text": "🎉 Congratulations! You won ₹5000 cashback 🎉 Scan the QR to receive it in your account 💰"
+    },
+    {
+      "id": "F_allcaps",
+      "pattern": "F_allcaps",
+      "label": "scam",
+      "text": "URGENT! YOUR ACCOUNT WILL BE BLOCKED. CALL 9876543210 IMMEDIATELY FOR VERIFICATION."
+    },
+    {
+      "id": "F_polite",
+      "pattern": "F_polite",
+      "label": "scam",
+      "text": "Good morning sir. This is from your bank. For a small verification please share the OTP sent to you now."
+    },
+    {
+      "id": "F_longtail",
+      "pattern": "F_longtail",
+      "label": "scam",
+      "text": "Dear valued customer, we hope this message finds you well. As part of our routine compliance exercise mandated by the regulator, we request that you kindly complete your re-verification at your earliest convenience by visiting hdfc-reverify.online and entering your registered details, failing which services may be temporarily curtailed."
+    },
+    {
+      "id": "F_upi_qr",
+      "pattern": "F_upi_qr",
+      "label": "scam",
+      "text": "upi://pay?pa=fraud@ybl&pn=Refund%20Dept&am=4999&cu=INR"
+    }
+  ],
+  "genuine": [
+    {
+      "id": "C_otp",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "OTP is 449213 for txn of INR 1,299 at AMAZON. Valid 10 min. Do not share with anyone. -ICICI Bank"
+    },
+    {
+      "id": "C_refund_real",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "Refund of Rs.1,299 for order 402-119 has been credited to your account ending 4471. -Amazon Pay"
+    },
+    {
+      "id": "C_blocked_real",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "Your debit card ending 7723 is temporarily blocked after 3 wrong PIN attempts. Visit any ATM to reset. -HDFC"
+    },
+    {
+      "id": "C_kyc_real",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "Your KYC is complete. No action needed. Thank you for banking with us. -Kotak"
+    },
+    {
+      "id": "C_verify_real",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "Your mobile number has been verified successfully for your SBI account. No further action required."
+    },
+    {
+      "id": "C_call_1800",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "Rs.2,500.00 debited from A/c XX4471 to VPA grocerystore@okaxis. Not you? Call 18004253800."
+    },
+    {
+      "id": "C_expire_card",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "Your credit card expires next month. A replacement has been dispatched. -Axis Bank"
+    },
+    {
+      "id": "C_emi",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "EMI of Rs.5,400 for Loan LN00219 is due on 05-10-26. Keep balance in A/c XX1190. -Bajaj"
+    },
+    {
+      "id": "C_neft",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "INR 12,000 credited to A/c XX8832 via NEFT from RAHUL SHARMA on 04-09-26. -SBI"
+    },
+    {
+      "id": "C_subsidy",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "Rs.1,180.00 credited to A/c XX4471 by DBT LPG SUBSIDY. Avl Bal Rs.16,204.55 -SBI"
+    },
+    {
+      "id": "C_upi_paid",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "You have paid Rs.85 to zomato@ybl. UPI Ref 526112447890. -Axis Bank"
+    },
+    {
+      "id": "C_statement",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "Your monthly account statement for Aug 2026 is ready. View in the app. -Kotak Mahindra Bank"
+    },
+    {
+      "id": "C_fd",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "Your FD of Rs.1,00,000 matures on 12-09-26. Renew via net banking or visit branch. -SBI"
+    },
+    {
+      "id": "C_cashback_ok",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "Cashback of Rs.50 has been credited to your Paytm wallet for your last order."
+    },
+    {
+      "id": "C_recharge_ok",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "Recharge of Rs.239 successful for 98XXXXXX21. Validity till 05-10-26. -Jio"
+    },
+    {
+      "id": "D_dinner",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "Ma reaching by 8 dont wait for dinner"
+    },
+    {
+      "id": "D_meet",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "See you at the library tomorrow"
+    },
+    {
+      "id": "D_bday",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "Happy birthday bro have a great one"
+    },
+    {
+      "id": "D_hinglish",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "Kal milte hai yaar, thak gaya aaj"
+    },
+    {
+      "id": "D_work",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "Sending the deck now, check and tell me"
+    },
+    {
+      "id": "E_empty",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": " "
+    },
+    {
+      "id": "E_onechar",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "k"
+    },
+    {
+      "id": "E_numbers",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "9876543210"
+    },
+    {
+      "id": "E_emojionly",
+      "pattern": "genuine",
+      "label": "genuine",
+      "text": "😂😂😂"
+    }
+  ]
+}

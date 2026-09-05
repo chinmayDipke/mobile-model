@@ -68,11 +68,40 @@ class StubDetector : Detector {
                 "number. Calling it reaches the scammer, not the bank.")
         }
 
-        // 5. "Sent you money by mistake, please send it back."
+        // 5. ASKING FOR AN OTP. The commonest UPI fraud in the country, and we
+        //    had no rule for it at all until the stress run found the hole.
+        //
+        //    A bank NEVER asks for an OTP. Every genuine OTP message says the
+        //    opposite - "do not share with anyone" - which is exactly what makes
+        //    this safe to be blunt about: the negation is the tell, so we check
+        //    for it first and only then look for someone asking.
+        if (t.hasAny("otp", "one time password", "one-time password") &&
+            !t.hasAny("do not share", "don't share", "dont share", "never share",
+                "do not disclose", "not share it with") &&
+            t.hasAny("share the otp", "share otp", "share your otp", "tell me the otp",
+                "tell the otp", "send the otp", "send me the otp", "provide the otp",
+                "give the otp", "give me the otp", "confirm the otp", "share it with our",
+                "share the code", "read out the otp")
+        ) {
+            return Verdict(true, "otp_theft", 0.96f,
+                "Your bank will never ask for an OTP. Anyone asking you to share " +
+                "one is trying to take money from your account right now.")
+        }
+
+        // 6. A payment link pasted straight into a message. Same trap as the QR,
+        //    just without the picture - approving it SENDS money.
+        if (t.contains("upi://pay") || t.contains("upi:pay")) {
+            return Verdict(true, "qr_send_only",
+                0.97f,
+                "This is a payment link, not a refund. Opening it asks you to SEND " +
+                "money, never to receive it.")
+        }
+
+        // 7. "Sent you money by mistake, please send it back."
         if (t.hasAny("by mistake", "mistakenly", "wrongly", "galti", "accidentally",
                 "wrong number", "wrong account", "wrong upi", "wrong transfer") &&
-            t.hasAny("return", "send back", "refund", "wapas", "give back",
-                "transfer back", "cooperate")
+            t.hasAny("return", "send back", "send it back", "sending back", "refund",
+                "wapas", "give back", "transfer back", "cooperate", "reverse it")
         ) {
             return Verdict(true, "wrong_transfer", 0.89f,
                 "Nobody actually sent you money. Check your own balance yourself before " +

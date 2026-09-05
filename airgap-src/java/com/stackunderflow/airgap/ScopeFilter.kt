@@ -49,6 +49,9 @@ object ScopeFilter {
         RegexOption.IGNORE_CASE
     )
 
+    /** Asking for an OTP is a money signal even when no amount is named. */
+    private val OTP_WORDS = listOf("otp", "one time password", "one-time password")
+
     private val MONEY_WORDS = listOf(
         "upi", "bank", "a/c", "acct", "account", "debit", "debited", "credit",
         "credited", "payment", "paytm", "phonepe", "gpay", "npci", "kyc",
@@ -75,9 +78,15 @@ object ScopeFilter {
     fun decide(sender: String, body: String): Decision {
         if (sender in PAYMENT_APPS) return Decision(true, "from a payment app")
 
+        // Undo "[dot]" style obfuscation here too - otherwise Gate 0 sees no
+        // link, drops the message, and the rules never get a look at it.
         val t = body.lowercase()
+            .replace(Regex("""\s*[\[(]\s*dot\s*[\])]\s*"""), ".")
+            .replace(Regex("""\s+dot\s+"""), ".")
+            .replace(Regex("""\s+slash\s+"""), "/")
         if (CURRENCY.containsMatchIn(t)) return Decision(true, "mentions an amount")
         if (LINK.containsMatchIn(t)) return Decision(true, "contains a link")
+        if (OTP_WORDS.any { t.contains(it) }) return Decision(true, "mentions an OTP")
         if (MONEY_WORDS.any { t.contains(it) }) return Decision(true, "mentions money")
         if (ACTION_WORDS.any { t.contains(it) }) return Decision(true, "asks you to act")
         if (DLT_HEADER.matches(sender.trim()) && t.length > 40)

@@ -106,6 +106,21 @@ class DetectionService : Service() {
                     Log.i(TAG, "DEMO_SCAM   ${d.scamCaught}/${d.scamTotal}")
                     Log.i(TAG, "DEMO_CLEAN  ${d.genuinePassed}/${d.genuineTotal}")
                     Log.i(TAG, "DEMO_FAILS  ${(d.missed + d.falseAlarms).let { if (it.isEmpty()) "none" else it.joinToString(", ") }}")
+
+                    // ---- suite 4: adversarial ----
+                    // Reworded patterns, novel shapes, keyword-evasion attempts,
+                    // real bank SMS stuffed with scam vocabulary, personal
+                    // chatter, and junk. This is the one that tells us where we
+                    // actually stand rather than where we hoped to.
+                    Log.i(TAG, "--- STRESS ---")
+                    val t2 = System.currentTimeMillis()
+                    val st = TestSetRunner.run(applicationContext, hybrid, "stress.json")
+                    val wall2 = System.currentTimeMillis() - t2
+                    Log.i(TAG, "STRESS_SCAM  ${st.scamCaught}/${st.scamTotal}")
+                    Log.i(TAG, "STRESS_CLEAN ${st.genuinePassed}/${st.genuineTotal}")
+                    Log.i(TAG, "STRESS_MS    $wall2")
+                    Log.i(TAG, "STRESS_MISS  ${if (st.missed.isEmpty()) "none" else st.missed.joinToString(", ")}")
+                    Log.i(TAG, "STRESS_FALSE ${if (st.falseAlarms.isEmpty()) "none" else st.falseAlarms.joinToString(", ")}")
                     Log.i(TAG, "DONE")
                 } catch (t: Throwable) {
                     Log.e(TAG, "FAILED ${t::class.java.simpleName}: ${t.message}", t)
