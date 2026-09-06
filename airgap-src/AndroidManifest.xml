@@ -100,6 +100,17 @@
             android:exported="false"
             android:screenOrientation="portrait" />
 
+        <!-- Only ever invoked if the user grants the call-screening role.
+             Without it Android never binds this and nothing else changes. -->
+        <service
+            android:name=".CallScreener"
+            android:exported="true"
+            android:permission="android.permission.BIND_SCREENING_SERVICE">
+            <intent-filter>
+                <action android:name="android.telecom.CallScreeningService" />
+            </intent-filter>
+        </service>
+
         <service
             android:name=".DetectionService"
             android:exported="false"

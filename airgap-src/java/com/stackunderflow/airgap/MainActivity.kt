@@ -69,6 +69,7 @@ class MainActivity : AppCompatActivity() {
                     "FALSE ALARM - it blocked a genuine bank SMS. Needs tuning."
             }, deduplicate = false)
         }
+        findViewById<LinearLayout>(R.id.callPermButton).setOnClickListener { askCallScreening() }
         findViewById<LinearLayout>(R.id.scanQrButton).setOnClickListener {
             startActivity(Intent(this, QrScanActivity::class.java))
         }
@@ -116,6 +117,36 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Optional. Declined, nothing changes anywhere - Android simply never binds
+     * CallScreener and the rest of the app behaves exactly as before.
+     */
+    private fun askCallScreening() {
+        try {
+            val rm = getSystemService(android.app.role.RoleManager::class.java) ?: return
+            if (!rm.isRoleAvailable(android.app.role.RoleManager.ROLE_CALL_SCREENING)) {
+                status.text = "This phone does not offer call screening."
+                return
+            }
+            if (rm.isRoleHeld(android.app.role.RoleManager.ROLE_CALL_SCREENING)) {
+                status.text = "Already on. Airgap warns when a number from a blocked scam calls."
+                return
+            }
+            startActivityForResult(
+                rm.createRequestRoleIntent(android.app.role.RoleManager.ROLE_CALL_SCREENING), 9
+            )
+        } catch (t: Throwable) {
+            status.text = "Could not open call screening settings."
+        }
+    }
+
+    private fun hasCallScreening(): Boolean = try {
+        getSystemService(android.app.role.RoleManager::class.java)
+            ?.isRoleHeld(android.app.role.RoleManager.ROLE_CALL_SCREENING) == true
+    } catch (t: Throwable) {
+        false
+    }
+
     private fun askNotificationAccess() {
         startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
     }
@@ -130,6 +161,7 @@ class MainActivity : AppCompatActivity() {
         setRow(R.id.smsState, R.id.smsDot, sms)
         setRow(R.id.overlayState, R.id.overlayDot, overlay)
         setRow(R.id.notifState, R.id.notifDot, notif)
+        setRow(R.id.callState, R.id.callDot, hasCallScreening())
 
         findViewById<TextView>(R.id.engineName).text = Airgap.detector.engineName
 

@@ -136,6 +136,21 @@
                 style="@style/RowDot" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/callPermButton"
+            style="@style/Row">
+
+            <TextView style="@style/RowLabel" android:text="Warn on scam callers" />
+
+            <TextView
+                android:id="@+id/callState"
+                style="@style/RowState" />
+
+            <View
+                android:id="@+id/callDot"
+                style="@style/RowDot" />
+        </LinearLayout>
+
         <!-- tools -->
         <TextView
             style="@style/SectionLabel"

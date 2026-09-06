@@ -132,10 +132,16 @@ object Airgap {
 
         worker.execute {
             ensureDetector(app)   // process may have started without MainActivity
+            val normalised = try { Normaliser.normalise(sender, body) } catch (t: Throwable) { null }
             val verdict = try {
-                detector.check(Normaliser.normalise(sender, body))
+                if (normalised != null) detector.check(normalised) else Verdict.clean()
             } catch (t: Throwable) {
                 Verdict.clean()   // never let detection crash the demo
+            }
+            // A blocked message often names the number it wants you to ring.
+            // Remember it, so we can warn if that number calls later.
+            if (verdict.isScam && normalised != null) {
+                ScamNumbers.remember(app, normalised.mobileNumbers)
             }
             main.post {
                 try {

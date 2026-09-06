@@ -180,6 +180,7 @@ class HistoryActivity : AppCompatActivity() {
         "fake_care" -> "Fake customer care"
         "wrong_transfer" -> "Wrong transfer trick"
         "qr_send_only" -> "This QR only sends money"
+        "scam_caller" -> "This number sent you a scam"
         else -> "Scam blocked"
     }
 
