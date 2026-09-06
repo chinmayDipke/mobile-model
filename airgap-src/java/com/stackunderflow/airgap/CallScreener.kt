@@ -36,11 +36,19 @@ class CallScreener : CallScreeningService() {
         }
 
         try {
-            if (details.callDirection != Call.Details.DIRECTION_INCOMING) return
-            val number = details.handle?.schemeSpecificPart ?: return
-            if (!ScamNumbers.isKnown(this, number)) return
-
-            Log.i("Airgap", "call from a number seen in a blocked scam")
+            if (details.callDirection != Call.Details.DIRECTION_INCOMING) {
+                Log.i("Airgap", "call screened: not incoming, ignoring")
+                return
+            }
+            val number = details.handle?.schemeSpecificPart
+            val known = ScamNumbers.isKnown(this, number)
+            // Log every screened call. Without this "the service never ran" and
+            // "it ran and did not know the number" look identical, which cost
+            // us a test cycle.
+            Log.i("Airgap", "call screened: known=" + known +
+                    " stored=" + ScamNumbers.count(this) +
+                    " last4=" + (number?.takeLast(4) ?: "?"))
+            if (number == null || !known) return
 
             startActivity(Intent(this, BlockActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
