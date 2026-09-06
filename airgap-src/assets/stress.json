@@ -168,6 +168,36 @@
       "pattern": "F_upi_qr",
       "label": "scam",
       "text": "upi://pay?pa=fraud@ybl&pn=Refund%20Dept&am=4999&cu=INR"
+    },
+    {
+      "id": "G_real_wapis",
+      "pattern": "G_real_wapis",
+      "label": "scam",
+      "text": "Bhai mere rs.5000 galti se tere phone no pe transfer ho gaye please qr code bhej raha hu mujhe wapis send kar."
+    },
+    {
+      "id": "G_vapas",
+      "pattern": "G_vapas",
+      "label": "scam",
+      "text": "Sir galti se 8000 aapke account me chale gaye, kripya vapas bhej dijiye"
+    },
+    {
+      "id": "G_bhejdo",
+      "pattern": "G_bhejdo",
+      "label": "scam",
+      "text": "Bhool se aapko 12000 transfer ho gaya, please bhej do wapas"
+    },
+    {
+      "id": "G_dedo",
+      "pattern": "G_dedo",
+      "label": "scam",
+      "text": "Wrong number pe paise chale gaye 6500, de do please urgent hai"
+    },
+    {
+      "id": "G_lauta",
+      "pattern": "G_lauta",
+      "label": "scam",
+      "text": "Maine galti se aapko 9000 bhej diye, lauta dijiye please"
     }
   ],
   "genuine": [

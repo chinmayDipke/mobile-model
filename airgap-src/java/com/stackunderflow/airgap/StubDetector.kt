@@ -98,10 +98,19 @@ class StubDetector : Detector {
         }
 
         // 7. "Sent you money by mistake, please send it back."
-        if (t.hasAny("by mistake", "mistakenly", "wrongly", "galti", "accidentally",
-                "wrong number", "wrong account", "wrong upi", "wrong transfer") &&
+        // Hinglish is written phonetically, so one spelling is never enough.
+        // A real message said "wapis" where we only had "wapas" and walked
+        // straight through. Same for the way people ask: "send kar", "bhej do",
+        // "de do" - none of which contain the English "send back".
+        if (t.hasAny("by mistake", "mistakenly", "wrongly", "accidentally",
+                "galti", "galati", "galty", "bhul se", "bhool se",
+                "wrong number", "wrong account", "wrong upi", "wrong transfer",
+                "wrong no", "gulti") &&
             t.hasAny("return", "send back", "send it back", "sending back", "refund",
-                "wapas", "give back", "transfer back", "cooperate", "reverse it")
+                "give back", "transfer back", "cooperate", "reverse it",
+                "wapas", "wapis", "vapas", "vapis", "waapas", "wapes",
+                "send kar", "bhej de", "bhej do", "bhejo", "de do", "dedo",
+                "lauta", "laut", "return kar", "back kar")
         ) {
             return Verdict(true, "wrong_transfer", 0.89f,
                 "Nobody actually sent you money. Check your own balance yourself before " +
